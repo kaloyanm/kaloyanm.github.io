@@ -1,1 +1,1 @@
-Sitemap: /kaloyanm.github.io/sitemap.xml
+Sitemap: /sitemap.xml
