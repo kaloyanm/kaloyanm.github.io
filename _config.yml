@@ -14,6 +14,14 @@ email: kaloyan.mir4ev@gmail.com
 
 # Authors
 authors:
+  kal:
+    name: Kaloyan
+    display_name: Kalo
+    avatar: "assets/images/avatar-sal.png"
+    email: kaloyan.mir4ev@gmail.com
+    web: https://creativesociety.com/
+    twitter: https://twitter.com/kvmirchev
+    description: "Климатичен алармист. Спиро-мислещ."
   sal:
     name: Sal
     display_name: Sal
