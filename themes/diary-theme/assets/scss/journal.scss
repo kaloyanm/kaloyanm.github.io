@@ -12,17 +12,17 @@ $extra-container-width: 25%;
 $extra-container-pagination-width: 64px;
 $stream-container-max-width: 1620px;
 
-$nav-title-size: 34px;
-$nav-subtitle-size: 20px;
-$nav-link-size: 22px;
-$nav-footer-size: 14px;
-$post-title-size: 34px;
-$post-subtitle-size: 16px;
-$post-summary-size: 18px;
-$post-body-size: 18px;
-$post-meta-size: 17px;
-$tag-category-title-size: 24px;
-$toc-size: 18px;
+$nav-title-size: 40px;
+$nav-subtitle-size: 24px;
+$nav-link-size: 26px;
+$nav-footer-size: 16px;
+$post-title-size: 40px;
+$post-subtitle-size: 19px;
+$post-summary-size: 21px;
+$post-body-size: 21px;
+$post-meta-size: 19px;
+$tag-category-title-size: 28px;
+$toc-size: 21px;
 
 $dark-accent: darken($color-accent, 10%);
 $deep-dark-accent: darken($color-accent, 50%);
@@ -36,18 +36,18 @@ $color-text: $deep-dark-accent;
 
 $single-column-max-width: 1020px;
 $single-column-drawer-width: 260px;
-$single-column-nav-title-size: 30px;
-$single-column-nav-subtitle-size: 22px;
-$single-column-nav-link-size: 20px;
-$single-column-nav-footer-size: 14px;
-$single-column-post-title-size: 24px;
-$single-column-post-summary-size: 18px;
-$single-column-post-body-size: 18px;
-$single-column-post-meta-size: 16px;
-$single-column-tag-category-title-size: 16px;
-$single-column-toc-size: 16px;
+$single-column-nav-title-size: 34px;
+$single-column-nav-subtitle-size: 26px;
+$single-column-nav-link-size: 24px;
+$single-column-nav-footer-size: 16px;
+$single-column-post-title-size: 28px;
+$single-column-post-summary-size: 21px;
+$single-column-post-body-size: 21px;
+$single-column-post-meta-size: 18px;
+$single-column-tag-category-title-size: 19px;
+$single-column-toc-size: 19px;
 
-$h1: 34px;
+$h1: 40px;
 $h-diff: 3px;
 
 ::selection {
@@ -537,7 +537,7 @@ a {
       justify-items: center;
       width: $extra-container-width;
       padding: 15px 0;
-      font-size: 14px;
+      font-size: 16px;
       width: $extra-container-pagination-width;
       font-family: $mono-font-list;
     }
@@ -554,7 +554,7 @@ a {
       padding: 15px 0;
       :not(.pagination-action-icon) {
         transition: all 0.2s linear;
-        font-size: 15px;
+        font-size: 17px;
         font-family: $mono-font-list;
       }
       .pagination-action-icon {
@@ -768,7 +768,7 @@ a {
     opacity: 0.3;
     color: $deep-dark-accent;
     font-family: $default-font-list;
-    font-size: 15px;
+    font-size: 18px;
     padding: 15px;
   }
   .post {
@@ -1026,7 +1026,7 @@ a {
       justify-items: center;
       width: $extra-container-width;
       padding: 15px 0;
-      font-size: 14px;
+      font-size: 16px;
       font-family: $mono-font-list;
     }
     .pagination-action {
@@ -1042,7 +1042,7 @@ a {
       padding: 15px 0;
       :not(.pagination-action-icon) {
         transition: all 0.2s linear;
-        font-size: 15px;
+        font-size: 17px;
         font-family: $mono-font-list;
       }
       .pagination-action-icon {
