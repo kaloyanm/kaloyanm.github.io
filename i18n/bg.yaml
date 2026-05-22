@@ -1,0 +1,28 @@
+- id: last_mod_on
+  translation: Последна промяна на {{ .Format "02.01.2006" }}
+- id: format_date
+  translation: '{{ .Format "02.01.2006" }}'
+- id: format_date_tosec
+  translation: '{{ .Format "02.01.2006 15:04" }}'
+- id: next_link
+  translation: Следваща
+- id: prev_link
+  translation: Предишна
+- id: no_newer_posts
+  translation: Няма по-нови публикации.
+- id: no_older_posts
+  translation: Няма по-стари публикации.
+- id: comments_disabled
+  translation: Коментарите са изключени.
+- id: comments_activate_js
+  translation: Моля, включете JavaScript, за да видите коментарите.
+- id: hugo_theme
+  translation: Тема за Hugo
+- id: ported_from
+  translation: Адаптирана от
+- id: by
+  translation: от
+- id: draft
+  translation: ЧЕРНОВА
+- id: toc_title
+  translation: СЪДЪРЖАНИЕ

@@ -1,5 +1,6 @@
 baseURL = 'https://kaloyanm.github.io/'
 languageCode = 'bg-bg'
+defaultContentLanguage = 'bg'
 title = 'Септокод 0.1'
 theme = 'diary-theme'
 
@@ -15,5 +16,5 @@ weight = 2
 
 [[menu.main]]
 url = "/tags"
-name = "Тагове"
+name = "Тагове  "
 weight = 3
