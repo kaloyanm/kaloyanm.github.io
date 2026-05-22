@@ -1,0 +1,30 @@
+# Hugo build output and cache
+/public/
+**/resources/_gen/
+.hugo_build.lock
+
+# Hugo Modules (if used)
+/.hugo_modules/
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor / IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Environment and secrets
+.env
+.env.*
+
+# Optional tooling (PostCSS, Tailwind, npm scripts, etc.)
+node_modules/
