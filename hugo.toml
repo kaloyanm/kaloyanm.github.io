@@ -1,4 +1,4 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://kaloyanm.github.io/'
 languageCode = 'en-us'
 title = 'Септокод 0.1'
 theme = 'diary-theme'
