@@ -1,0 +1,31 @@
+<section id="experience" class="section">
+  <h2 class="section-title"><span class="section-num">02</span> Experience</h2>
+  <ol class="timeline">
+    {{ range hugo.Data.experience.featured }}
+    <li class="timeline-item">
+      <div class="timeline-period">{{ .period }}</div>
+      <div class="timeline-body">
+        <h3 class="timeline-role">{{ .role }}</h3>
+        <p class="timeline-company">{{ .company }} &middot; {{ .location }}</p>
+        <ul class="timeline-highlights">
+          {{ range .highlights }}
+          <li>{{ . }}</li>
+          {{ end }}
+        </ul>
+      </div>
+    </li>
+    {{ end }}
+  </ol>
+
+  <div class="earlier-roles">
+    <h3 class="earlier-roles-title">Earlier roles</h3>
+    <ul class="earlier-roles-list">
+      {{ range hugo.Data.experience.earlier }}
+      <li>
+        <span class="earlier-period">{{ .period }}</span>
+        <span class="earlier-detail"><strong>{{ .company }}</strong> ({{ .role }}) &mdash; {{ .summary }}</span>
+      </li>
+      {{ end }}
+    </ul>
+  </div>
+</section>

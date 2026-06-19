@@ -1,0 +1,11 @@
+- category: "Languages"
+  items: ["Python", "Ruby", "JavaScript", "TypeScript", "Go", "PHP"]
+
+- category: "Frameworks & Libraries"
+  items: ["Django", "Ruby on Rails", "Flask", "Sidekiq", "Celery", "Pytest", "CodeIgniter", "Zend Framework", "MQTT", "RabbitMQ", "Gevent", "Google Cloud Pub/Sub"]
+
+- category: "Storage"
+  items: ["MySQL", "PostgreSQL", "MongoDB", "SQLite", "Redis", "Apache Solr"]
+
+- category: "Infrastructure & Tools"
+  items: ["Linux", "macOS", "Git", "Bash", "Docker", "Vagrant", "Ansible", "Jenkins", "AWS (S3, CloudWatch, EC2)", "GitHub", "GitLab", "Travis CI", "NewRelic", "Sentry"]

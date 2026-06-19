@@ -1,0 +1,69 @@
+featured:
+  - company: "Freelance Consultant"
+    role: "AI Engineering"
+    location: "Remote"
+    period: "Sep 2025 – Feb 2026"
+    highlights:
+      - "Led MVP exploration and feasibility assessment for migrating legacy C++ and Perl systems to a modern stack comprising Rust, Ruby, and React."
+      - "Prototyped a mid-complexity educational platform built on Ruby on Rails, with a strong emphasis on intuitive UI/UX design."
+      - "Developed web-based tools for automated test data generation and export, streamlining QA and testing workflows."
+      - "Designed and built a cross-platform subtitle editing application with Electron-Vite, targeting Windows, macOS, and Linux."
+
+  - company: "Emerchantpay"
+    role: "Senior Ruby Developer"
+    location: "Remote"
+    period: "Apr 2023 – May 2025"
+    highlights:
+      - "Built and maintained payment integration modules with banking providers in Brazil and Mexico, enabling secure and compliant transaction processing."
+      - "Extended an existing KYC microservice to support identity verification workflows, improving onboarding reliability and regulatory compliance across multiple markets."
+
+  - company: "Ship.Cars USA, LLC"
+    role: "Senior Python Developer"
+    location: "Remote"
+    period: "Dec 2020 – May 2022"
+    highlights:
+      - "Developed matching logic between shippers and carriers for the logistics platform."
+      - "Refactored the invoice domain by improving text vs. HTML handling, optimizing sending workflows, and refining final price calculation."
+
+  - company: "Djansters"
+    role: "Senior Python Developer"
+    location: "Germany (Remote)"
+    period: "May 2016 – Jun 2020"
+    highlights:
+      - "Migrated a production jobs portal from VPS to Heroku, improving deployment reliability and reducing infrastructure overhead."
+      - "Led the full migration from Python 2 to Python 3, strengthening performance, security, and long-term maintainability."
+      - "Optimized database queries and memory usage, achieving up to 40–50% faster response times under load."
+      - "Designed and implemented background processing pipelines to offload heavy workloads and reduce user-facing latency."
+      - "Refactored a large legacy codebase to cut technical debt and enable faster feature development."
+      - "Built automated export feed generation and upheld high code quality through consistent code reviews."
+
+earlier:
+  - company: "TaxiMe"
+    location: "Bulgaria (Remote)"
+    role: "Python/Go Senior Engineer"
+    period: "May 2015 – May 2016"
+    summary: "Backend microservices for a taxi booking app, plus a high-throughput service for ingesting and archiving GPS coordinates at scale."
+
+  - company: "3B Nexus"
+    location: "UK (Remote)"
+    role: "Lead"
+    period: "Apr 2011 – Dec 2014"
+    summary: "Stabilized a video publishing platform for private investors and led the migration of video players and playlists from Flash to HTML5."
+
+  - company: "StreamingVideoProvider"
+    location: "Bulgaria"
+    role: "PHP Senior"
+    period: "Jan 2009 – Sep 2010"
+    summary: "Control panels and backend services for uploading, encoding, and storing video content, plus embeddable players and galleries."
+
+  - company: "Idea Marketing"
+    location: "Bulgaria"
+    role: "PHP Senior"
+    period: "Dec 2007 – Nov 2008"
+    summary: "Invoice and staff-management modules for a browser-based ERP application."
+
+  - company: "CyclamSoft"
+    location: "Bulgaria"
+    role: "PHP Developer"
+    period: "Mar 2005 – Mar 2007"
+    summary: "Control panels and e-commerce features, including invoicing and catalog management, for a UK computer-parts retailer."

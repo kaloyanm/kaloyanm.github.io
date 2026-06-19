@@ -1,0 +1,7 @@
+name = "Portfolio"
+license = "MIT"
+description = "A minimal, single-page portfolio theme."
+min_version = "0.120.0"
+
+[author]
+  name = "Kaloyan Mirchev"
