@@ -1,3 +1,6 @@
+- category: "Approach & Practices"
+  items: ["Software Design", "Prototype-First", "Microservices", "OOP", "Algorithms", "Problem Solving", "Testing", "Database Design", "Team Collaboration"]
+
 - category: "Languages"
   items: ["Python", "Ruby", "JavaScript", "TypeScript", "Go", "PHP"]
 
