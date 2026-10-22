@@ -1,0 +1,12 @@
+{{ define "main" }}
+  <div class="page">
+    <header class="page-header">
+      <h1 class="page-title">{{ .Title }}</h1>
+      {{ with .Content }}<div class="page-intro">{{ . }}</div>{{ end }}
+    </header>
+
+    {{ partial "article-list.html" . }}
+
+    <p class="page-back"><a href="{{ .Site.Home.RelPermalink }}">&larr; Back to home</a></p>
+  </div>
+{{ end }}

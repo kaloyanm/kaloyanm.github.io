@@ -1,0 +1,21 @@
+<ul class="article-list">
+  {{ range hugo.Data.articles }}
+  <li class="article-item">
+    <div class="article-meta">
+      {{ with .status }}<span class="article-status">{{ . }}</span>{{ end }}
+      {{ with .date }}<span class="article-date">{{ . }}</span>{{ end }}
+    </div>
+    <h3 class="article-title">
+      {{ if .url }}<a href="{{ .url | relURL }}">{{ .title }}</a>{{ else }}{{ .title }}{{ end }}
+    </h3>
+    {{ with .summary }}<p class="article-summary">{{ . }}</p>{{ end }}
+    {{ with .tags }}
+    <ul class="article-tags">
+      {{ range . }}
+      <li>{{ . }}</li>
+      {{ end }}
+    </ul>
+    {{ end }}
+  </li>
+  {{ end }}
+</ul>

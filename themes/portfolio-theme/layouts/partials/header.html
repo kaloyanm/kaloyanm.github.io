@@ -1,12 +1,14 @@
+{{ $home := .Site.Home.RelPermalink }}
 <header class="site-header">
   <nav class="nav">
-    <a class="nav-name" href="#top">{{ .Title }}</a>
+    <a class="nav-name" href="{{ $home }}">{{ .Site.Params.name | default .Site.Title }}</a>
     <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="{{ $home }}#about">About</a></li>
+      <li><a href="{{ $home }}#experience">Experience</a></li>
+      <li><a href="{{ $home }}#projects">Projects</a></li>
+      <li><a href="{{ "/articles/" | relURL }}"{{ if eq .Section "articles" }} aria-current="page"{{ end }}>Articles</a></li>
+      <li><a href="{{ $home }}#skills">Skills</a></li>
+      <li><a href="{{ $home }}#contact">Contact</a></li>
     </ul>
     <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode">
       <span class="theme-toggle-icon" aria-hidden="true"></span>

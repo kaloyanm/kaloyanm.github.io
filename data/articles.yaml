@@ -1,0 +1,29 @@
+# Articles that are planned or in progress.
+# Each entry supports: title, summary, date (planned), status, url, tags.
+# Leave `url` out while an article is unpublished — the card renders as "Coming soon".
+# Once it is live, add `url` (e.g. "/articles/my-post/") and change `status`.
+
+- title: "Prototype-first AI tooling for legacy systems"
+  summary: "How I scope feasibility studies: what to prototype, what to skip, and how to hand a working system to the team that has to maintain it."
+  date: "November 2026"
+  status: "Coming soon"
+  tags:
+    - AI engineering
+    - Legacy migration
+
+- title: "KYC pipelines that survive an audit"
+  summary: "Practical notes from a decade of payment and compliance work — data retention, idempotency, and the edge cases auditors actually ask about."
+  date: "December 2026"
+  status: "Coming soon"
+  tags:
+    - Fintech
+    - Compliance
+
+- title: "Go or Python for backend services?"
+  summary: "A pragmatic comparison from running both in production: throughput, team ergonomics, and where each one quietly costs you."
+  date: "Early 2027"
+  status: "Drafting"
+  tags:
+    - Go
+    - Python
+    - Architecture
