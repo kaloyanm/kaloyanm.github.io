@@ -1,0 +1,25 @@
+{{- $src := .Get "src" -}}
+{{- $alt := .Get "alt" -}}
+{{- $caption := .Get "caption" -}}
+{{- if not $src -}}{{ errorf "figure: src is required" }}{{- end -}}
+{{- if not $alt -}}{{ errorf "figure: alt is required for %q" $src }}{{- end -}}
+{{- $src = strings.TrimPrefix "/" $src -}}
+
+{{- $slug := .Page.File.ContentBaseName -}}
+{{- if not (strings.Contains $src "/") -}}
+  {{- $src = printf "images/think/%s/%s" $slug $src -}}
+{{- end -}}
+
+{{- $res := resources.Get $src -}}
+{{- if not $res -}}{{ errorf "figure: asset %q not found" $src }}{{- end -}}
+
+{{- $isRaster := ne $res.MediaType.SubType "svg" -}}
+{{- $img := $res -}}
+{{- if and $isRaster (gt $res.Width 1400) -}}
+  {{- $img = $res.Resize "1400x q85" -}}
+{{- end -}}
+
+<figure class="figure">
+  <img src="{{ $img.RelPermalink }}" alt="{{ $alt }}"{{ if $isRaster }} width="{{ $img.Width }}" height="{{ $img.Height }}"{{ end }} loading="lazy" decoding="async">
+  {{ with $caption }}<figcaption>{{ . }}</figcaption>{{ end }}
+</figure>

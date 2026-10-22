@@ -1,36 +1,41 @@
-{{ $articles := hugo.Data.articles }}
-{{ $latest := index $articles 0 }}
+{{ $state := partial "essay-state.html" . }}
+{{ $articles := $state.articles }}
+{{ $published := $state.published }}
+{{ $latest := $state.latest }}
+{{ $skipFirst := and (not $published) (gt (len $articles) 0) }}
 <section class="section desk" aria-labelledby="desk-title">
   <div class="desk-main">
     <p class="kicker"><span class="kicker-no">02</span> From the desk</p>
+    {{ with $latest }}
     <article class="essay">
-      <p class="essay-meta">{{ $latest.topic }} · {{ $latest.date }} · {{ $latest.status }}</p>
+      <p class="essay-meta">{{ .topic }} · {{ .date }} · {{ .status }}</p>
       <h2 id="desk-title" class="essay-title">
-        {{ if $latest.url }}<a href="{{ $latest.url | relURL }}">{{ $latest.title }}</a>{{ else }}{{ $latest.title }}{{ end }}
+        {{ if .url }}<a href="{{ .url | relURL }}">{{ .title }}</a>{{ else }}{{ .title }}{{ end }}
       </h2>
-      <p class="essay-summary">{{ $latest.summary }}</p>
+      <p class="essay-summary">{{ .summary }}</p>
       <ul class="tag-list" aria-label="Topics">
-        {{ range $latest.tags }}<li>{{ . }}</li>{{ end }}
+        {{ range .tags }}<li>{{ . }}</li>{{ end }}
       </ul>
       <p class="essay-foot">
-        {{ if $latest.url }}
-        <a class="text-link" href="{{ $latest.url | relURL }}">Read essay →</a>
+        {{ if .url }}
+        <a class="text-link" href="{{ .url | relURL }}">Read essay →</a>
         {{ else }}
-        <span class="essay-soon">In progress · publishes {{ $latest.date }}</span>
+        <span class="essay-soon">In progress · publishes {{ .date }}</span>
         {{ end }}
         <a class="text-link" href="{{ relURL "think/" }}">All essays →</a>
       </p>
     </article>
+    {{ end }}
 
     <div class="more-list">
-      {{ range $i, $e := $articles }}{{ if gt $i 0 }}
+      {{ range $i, $e := $articles }}{{ if or (not $skipFirst) (gt $i 0) }}
       <div class="more-row">
         <span class="more-date">{{ $e.date }}</span>
         <span class="more-title">{{ if $e.url }}<a href="{{ $e.url | relURL }}">{{ $e.title }}</a>{{ else }}{{ $e.title }}{{ end }}</span>
         <span class="more-state">{{ $e.status }}</span>
       </div>
       {{ end }}{{ end }}
-      <p class="more-all"><span>[ {{ len $articles }} essays in the queue ]</span><a href="{{ relURL "think/" }}">Archive →</a></p>
+      <p class="more-all"><span>[ {{ if $articles }}{{ len $articles }} essays in the queue{{ else }}{{ len $published }} published{{ end }} ]</span><a href="{{ relURL "think/" }}">Archive →</a></p>
     </div>
   </div>
 

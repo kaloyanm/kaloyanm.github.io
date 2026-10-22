@@ -1,0 +1,25 @@
+{{- $articles := slice -}}
+{{- with hugo.Data.articles -}}
+  {{- if reflect.IsSlice . -}}{{- $articles = . -}}{{- end -}}
+{{- end -}}
+
+{{- $published := sort (where .Site.RegularPages "Section" "think") "Date" "desc" -}}
+{{- $latest := dict -}}
+{{- with $published -}}
+  {{- $page := index . 0 -}}
+  {{- $topic := "Essay" -}}
+  {{- with $page.Params.tags -}}{{- $topic = index . 0 -}}{{- end -}}
+  {{- $latest = dict
+    "title" $page.Title
+    "url" $page.RelPermalink
+    "date" ($page.Date.Format "Jan 2006")
+    "status" "Published"
+    "topic" $topic
+    "summary" $page.Description
+    "tags" ($page.Params.tags | default (slice))
+    "read" (printf "%d min" $page.ReadingTime) -}}
+{{- else -}}
+  {{- with $articles -}}{{- $latest = index . 0 -}}{{- end -}}
+{{- end -}}
+
+{{- return (dict "latest" $latest "articles" $articles "published" $published) -}}

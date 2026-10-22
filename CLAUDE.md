@@ -34,10 +34,13 @@ A personal site for Kaloyan Mirchev — backend engineer and AI engineering cons
 ## Publishing an essay
 
 1. Create `content/think/<slug>.md` with `title`, `date` (past), `description`, optional `series`, and `tags`.
-2. Either remove the matching entry from `data/articles.yaml` (if it was listed as upcoming) or add `url = "/think/<slug>/"` to it.
-3. `hugo --minify --cleanDestinationDir` and verify `/think/` lists it under "Published".
+2. Remove the matching entry from `data/articles.yaml`; the Published list is generated from `content/think/`. (If you keep a published catalogue entry, add `url = "/think/<slug>/"`; the In progress table ignores entries that have a URL.)
+3. Put figures in `assets/images/think/<slug>/` and insert them with `{{< figure src="fig-01.jpg" alt="..." caption="..." >}}`; the shortcode applies the existing figure frame and does not upscale.
+4. `hugo --minify --cleanDestinationDir` and verify `/think/` lists it under "Published".
 
 ## Notes
 
 - `design/1999-wireframes.html` is the original wireframe artifact for this direction. It is outside Hugo's content/static dirs and is not published; open it directly in a browser.
+- **Video essays**: `.claude/skills/youtube-deep-dive/` turns a YouTube URL into a Think piece (yt-dlp captions, ffmpeg stills, first-principles drafting). It writes to `content/think/<slug>.md` and `assets/images/think/<slug>/`, and uses the `figure` shortcode rather than raw HTML.
+- **Think queue**: `data/articles.yaml` is the "In progress" list. The Think page hides that block when the list is empty; the home "From the desk" panel falls back to the latest published essay. Published pages do not need a catalogue entry.
 - There are no trackers, analytics scripts, newsletter forms, or comment systems. Keep it that way unless asked.

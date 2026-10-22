@@ -3,6 +3,10 @@
 **/resources/_gen/
 .hugo_build.lock
 
+# Video-essay scratch (downloaded video, captions, candidate frames)
+/.cache/
+__pycache__/
+
 # Hugo Modules (if used)
 /.hugo_modules/
 
