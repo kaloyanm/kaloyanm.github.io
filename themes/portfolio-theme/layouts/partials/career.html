@@ -1,0 +1,26 @@
+{{ $exp := hugo.Data.experience }}
+<section class="section career" aria-labelledby="career-title">
+  <div class="section-head">
+    <h2 id="career-title" class="section-title">Career, abridged</h2>
+    <a class="more" href="{{ relURL "about/" }}#career">[ Full history → ]</a>
+  </div>
+
+  <div class="career-grid">
+    {{ range $exp.featured }}
+    <div class="job">
+      <span class="job-years">{{ .period }}</span>
+      <div>
+        <p class="job-role">{{ .role }}</p>
+        <p class="job-company">{{ .company }} · {{ .location }}</p>
+      </div>
+    </div>
+    {{ end }}
+    <div class="job">
+      <span class="job-years">2005—2015</span>
+      <div>
+        <p class="job-role">Earlier roles</p>
+        <p class="job-company">{{ len $exp.earlier }} positions · PHP, Perl, Delphi, video</p>
+      </div>
+    </div>
+  </div>
+</section>

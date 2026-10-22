@@ -1,0 +1,16 @@
+{{ define "main" }}
+<div class="page notfound">
+  <p class="crumbs"><a href="{{ .Site.Home.RelPermalink }}">Home</a> / 404</p>
+  <h1 class="page-title">Not found.</h1>
+  <p class="page-dek">This page is missing, moved, or was never written. Try the index — everything is numbered.</p>
+  <p class="notfound-links">
+    <a class="btn" href="{{ .Site.Home.RelPermalink }}">Back to the desk</a>
+    <button class="index-btn" type="button" data-index-open aria-haspopup="dialog">Open index</button>
+  </p>
+  <ul class="notfound-list">
+    <li><a href="{{ relURL "think/" }}">Think</a> — essays and notes</li>
+    <li><a href="{{ relURL "work/" }}">Work</a> — projects, grouped by practice</li>
+    <li><a href="{{ relURL "about/" }}">About</a> — profile, career, contact</li>
+  </ul>
+</div>
+{{ end }}

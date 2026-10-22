@@ -1,0 +1,84 @@
+{{ $articles := hugo.Data.articles }}
+{{ $latest := index $articles 0 }}
+<section class="section desk" aria-labelledby="desk-title">
+  <div class="desk-main">
+    <p class="kicker"><span class="kicker-no">02</span> From the desk</p>
+    <article class="essay">
+      <p class="essay-meta">{{ $latest.topic }} · {{ $latest.date }} · {{ $latest.status }}</p>
+      <h2 id="desk-title" class="essay-title">
+        {{ if $latest.url }}<a href="{{ $latest.url | relURL }}">{{ $latest.title }}</a>{{ else }}{{ $latest.title }}{{ end }}
+      </h2>
+      <p class="essay-summary">{{ $latest.summary }}</p>
+      <ul class="tag-list" aria-label="Topics">
+        {{ range $latest.tags }}<li>{{ . }}</li>{{ end }}
+      </ul>
+      <p class="essay-foot">
+        {{ if $latest.url }}
+        <a class="text-link" href="{{ $latest.url | relURL }}">Read essay →</a>
+        {{ else }}
+        <span class="essay-soon">In progress · publishes {{ $latest.date }}</span>
+        {{ end }}
+        <a class="text-link" href="{{ relURL "think/" }}">All essays →</a>
+      </p>
+    </article>
+
+    <div class="more-list">
+      {{ range $i, $e := $articles }}{{ if gt $i 0 }}
+      <div class="more-row">
+        <span class="more-date">{{ $e.date }}</span>
+        <span class="more-title">{{ if $e.url }}<a href="{{ $e.url | relURL }}">{{ $e.title }}</a>{{ else }}{{ $e.title }}{{ end }}</span>
+        <span class="more-state">{{ $e.status }}</span>
+      </div>
+      {{ end }}{{ end }}
+      <p class="more-all"><span>[ {{ len $articles }} essays in the queue ]</span><a href="{{ relURL "think/" }}">Archive →</a></p>
+    </div>
+  </div>
+
+  <aside class="desk-side">
+    <div class="now">
+      <h3 class="now-title">This month</h3>
+      <dl>
+        <dt>Building</dt><dd>{{ .Site.Params.now_building }}</dd>
+        <dt>Writing</dt><dd>{{ .Site.Params.now_writing }}</dd>
+        <dt>Open to</dt><dd>{{ .Site.Params.now_open }}</dd>
+      </dl>
+    </div>
+
+    <figure class="figure">
+      <svg viewBox="0 0 360 160" role="img" aria-labelledby="fig-title fig-desc">
+        <title id="fig-title">A typical request path</title>
+        <desc id="fig-desc">Client to edge, edge to API, API to database; API to queue, queue to worker, worker writes to database.</desc>
+        <g class="fig-boxes">
+          <rect x="4" y="16" width="72" height="30"></rect>
+          <text x="40" y="35">Client</text>
+          <rect x="96" y="16" width="72" height="30"></rect>
+          <text x="132" y="35">Edge</text>
+          <rect x="188" y="16" width="72" height="30"></rect>
+          <text x="224" y="35">API</text>
+          <rect x="280" y="16" width="72" height="30"></rect>
+          <text x="316" y="35">Database</text>
+
+          <rect x="188" y="104" width="72" height="30"></rect>
+          <text x="224" y="123">Queue</text>
+          <rect x="280" y="104" width="72" height="30"></rect>
+          <text x="316" y="123">Worker</text>
+        </g>
+        <g class="fig-lines">
+          <path d="M76 31H92" marker-end="url(#arrow)"></path>
+          <path d="M168 31H184" marker-end="url(#arrow)"></path>
+          <path d="M260 31H276" marker-end="url(#arrow)"></path>
+          <path d="M224 46V100" marker-end="url(#arrow)"></path>
+          <path d="M260 119H276" marker-end="url(#arrow)"></path>
+          <path d="M316 100V50" marker-end="url(#arrow)"></path>
+        </g>
+        <defs>
+          <marker id="arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+            <path d="M0 0L6 3L0 6Z"></path>
+          </marker>
+        </defs>
+        <text class="fig-note" x="230" y="80">async</text>
+      </svg>
+      <figcaption>Fig. 1 — a request path I keep meeting. Edge, API, queue, worker, database.</figcaption>
+    </figure>
+  </aside>
+</section>

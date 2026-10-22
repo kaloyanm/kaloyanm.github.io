@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paper Terminal — wireframes v0.1</title>
+<style>
+  :root {
+    --paper: #f6f4ee;
+    --frame: #fcfbf8;
+    --ink: #17191d;
+    --ink-2: #3f434a;
+    --muted: #7a7e86;
+    --line: #c8c4ba;
+    --line-soft: #ddd9cf;
+    --fill: #efede6;
+    --fill-2: #e4e1d8;
+    --note: #2f4fd0;
+    --mono: "SFMono-Regular", "JetBrains Mono", Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 1260px; margin: 0 auto; padding: 48px 24px 96px; }
+
+  /* ---------- document header ---------- */
+  .doc-head { margin-bottom: 56px; }
+  .doc-kicker {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--note); margin: 0 0 14px;
+  }
+  .doc-head h1 {
+    font-size: 44px; line-height: 1.05; margin: 0 0 16px; letter-spacing: -0.02em;
+    max-width: 820px;
+  }
+  .doc-dek { font-size: 17px; line-height: 1.55; color: var(--ink-2); max-width: 760px; margin: 0 0 28px; }
+  .principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
+  .principle { border-top: 2px solid var(--ink); padding-top: 12px; }
+  .principle b { display: block; font-size: 14px; margin-bottom: 6px; }
+  .principle span { display: block; color: var(--ink-2); font-size: 13px; line-height: 1.55; }
+  .map { border: 1px solid var(--line); background: var(--frame); }
+  .map-row { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line-soft); }
+  .map-row:first-child { border-top: 0; background: var(--fill); font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .map-row > div { padding: 8px 12px; }
+  .map-row > div + div { border-left: 1px solid var(--line-soft); }
+  .map-row span { color: var(--muted); }
+
+  /* ---------- screen shell ---------- */
+  .screen { margin: 0 0 64px; }
+  .screen-cap { display: flex; align-items: baseline; gap: 14px; border-bottom: 1px solid var(--ink); padding-bottom: 10px; margin-bottom: 18px; }
+  .screen-cap .num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--note); }
+  .screen-cap h2 { font-size: 18px; margin: 0; letter-spacing: -0.01em; }
+  .screen-cap .dims { margin-left: auto; font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.06em; }
+
+  .frame {
+    background: var(--frame);
+    border: 1px solid var(--ink);
+    box-shadow: 5px 5px 0 var(--fill-2);
+    overflow: hidden;
+  }
+
+  /* tags */
+  .tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px dashed var(--line);
+    padding: 2px 6px;
+    margin-bottom: 8px;
+  }
+  .tag b { color: var(--note); font-weight: 500; }
+
+  /* ---------- ticker / masthead ---------- */
+  .ticker {
+    border-bottom: 1px solid var(--ink);
+    background: var(--ink);
+    color: var(--fill);
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    display: flex;
+    gap: 22px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .ticker .dot { color: #9ee493; }
+  .ticker .spacer { margin-left: auto; color: var(--line); }
+
+  .mast { display: flex; align-items: center; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--ink); }
+  .monogram {
+    width: 46px; height: 46px; border: 1px solid var(--ink);
+    display: grid; place-items: center; flex-shrink: 0;
+    font-family: var(--mono); font-size: 13px; letter-spacing: 0.06em;
+    background: var(--fill);
+  }
+  .brand { line-height: 1.2; }
+  .brand .word { font-size: 17px; font-weight: 700; letter-spacing: 0.18em; }
+  .brand .sub { font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.16em; color: var(--muted); text-transform: uppercase; }
+  .nav {
+    margin-left: auto; display: flex; align-items: center; gap: 18px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .nav .n { color: var(--muted); }
+  .nav .active { border-bottom: 2px solid var(--ink); padding-bottom: 2px; }
+  .nav .search { border: 1px solid var(--line); padding: 4px 8px; color: var(--muted); }
+
+  /* ---------- generic blocks ---------- */
+  .pad { padding: 26px 20px; }
+  .rule { border-top: 1px solid var(--line); }
+  .rule-ink { border-top: 1px solid var(--ink); }
+  .mono { font-family: var(--mono); }
+  .label {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .bars { display: grid; gap: 7px; margin: 10px 0 0; }
+  .bar { display: block; height: 8px; background: var(--fill-2); border-radius: 2px; }
+  .ph {
+    position: relative; background: var(--fill);
+    border: 1px solid var(--line);
+    display: grid; place-items: center;
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--muted);
+    background-image:
+      linear-gradient(to top right, transparent calc(50% - 0.5px), var(--line) 50%, transparent calc(50% + 0.5px)),
+      linear-gradient(to bottom right, transparent calc(50% - 0.5px), var(--line) 50%, transparent calc(50% + 0.5px));
+    background-size: 100% 100%;
+  }
+  .ph span { background: var(--fill); padding: 2px 6px; border: 1px solid var(--line); }
+
+  /* ---------- home: hero ---------- */
+  .hero { display: grid; grid-template-columns: 1.65fr 1fr; gap: 0; border-bottom: 1px solid var(--ink); }
+  .hero-main { padding: 34px 30px 32px 20px; border-right: 1px solid var(--line); }
+  .eyebrow { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-2); }
+  .hero h1 { font-size: 46px; line-height: 1.02; letter-spacing: -0.025em; margin: 14px 0 16px; max-width: 640px; }
+  .hero h1 em { font-style: normal; border-bottom: 3px solid var(--ink); }
+  .hero-sub { font-size: 14.5px; color: var(--ink-2); max-width: 520px; margin: 0 0 20px; }
+  .cta-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .btn { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; border: 1px solid var(--ink); padding: 8px 12px; background: var(--ink); color: var(--frame); }
+  .btn.ghost { background: transparent; color: var(--ink); }
+  .hero-meta { margin-top: 16px; font-family: var(--mono); font-size: 9.5px; color: var(--muted); letter-spacing: 0.04em; }
+  .hero-meta b { color: var(--ink); font-weight: 500; }
+
+  .idcard { padding: 20px; display: grid; gap: 12px; align-content: start; }
+  .idcard .photo { height: 150px; }
+  .idcard .name { font-size: 17px; font-weight: 700; letter-spacing: 0.02em; }
+  .idcard .role { font-size: 11.5px; color: var(--ink-2); line-height: 1.45; }
+  .idcard dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+  .idcard dt { color: var(--muted); }
+  .idcard dd { margin: 0; color: var(--ink-2); }
+  .idcard .links { display: flex; gap: 10px; font-family: var(--mono); font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; border-top: 1px solid var(--line); padding-top: 10px; flex-wrap: wrap; }
+  .barcode { height: 26px; border: 1px solid var(--line); background: repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 5px, var(--ink) 5px 8px, transparent 8px 11px); opacity: 0.55; }
+
+  /* ---------- home: doors ---------- */
+  .doors { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--ink); }
+  .door { padding: 22px 20px; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 8px; }
+  .door:last-child { border-right: 0; }
+  .door .no { font-family: var(--mono); font-size: 10px; color: var(--note); letter-spacing: 0.1em; }
+  .door h3 { margin: 0; font-size: 22px; letter-spacing: 0.14em; text-transform: uppercase; }
+  .door p { margin: 0; font-size: 12.5px; color: var(--ink-2); line-height: 1.5; }
+  .door .latest { margin-top: auto; border-top: 1px dashed var(--line); padding-top: 10px; font-size: 11.5px; color: var(--ink-2); }
+  .door .latest b { display: block; font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 400; margin-bottom: 3px; }
+  .door .foot { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+
+  /* ---------- home: ledger table ---------- */
+  .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 24px 20px 0; }
+  .sec-head h2 { font-size: 24px; margin: 0; letter-spacing: -0.01em; }
+  .sec-head .more { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); }
+  table { width: 100%; border-collapse: collapse; }
+  .ledger { margin-top: 14px; }
+  .ledger th {
+    text-align: left; font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--muted); font-weight: 400;
+    border-bottom: 1px solid var(--ink); padding: 0 20px 6px;
+  }
+  .ledger td { border-bottom: 1px solid var(--line-soft); padding: 10px 20px; font-size: 12px; vertical-align: top; }
+  .ledger tr:last-child td { border-bottom: 0; }
+  .ledger .yr { font-family: var(--mono); font-size: 10px; color: var(--muted); white-space: nowrap; }
+  .ledger .proj { font-weight: 600; }
+  .ledger .proj span { display: block; font-weight: 400; font-size: 11px; color: var(--muted); }
+  .ledger .stack { font-family: var(--mono); font-size: 9px; color: var(--ink-2); letter-spacing: 0.03em; }
+
+  /* ---------- home: desk split ---------- */
+  .desk { display: grid; grid-template-columns: 1.55fr 1fr; border-top: 1px solid var(--ink); }
+  .desk-main { padding: 26px 28px 26px 20px; border-right: 1px solid var(--line); }
+  .desk-side { padding: 26px 20px; display: grid; gap: 18px; align-content: start; }
+  .essay .kicker { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; }
+  .essay h3 { font-size: 27px; line-height: 1.15; margin: 8px 0 8px; letter-spacing: -0.015em; max-width: 480px; }
+  .essay .dek { font-size: 13px; color: var(--ink-2); margin: 0 0 12px; max-width: 480px; }
+  .essay .read { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .now { border: 1px solid var(--line); padding: 14px; }
+  .idcard > .tag,
+  .desk-side > .tag,
+  .sidenotes > .tag { justify-self: start; }
+  .more-list { margin-top: 18px; border-top: 1px solid var(--line); }
+  .more-row { display: grid; grid-template-columns: 86px 1fr auto; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line-soft); font-size: 12px; align-items: baseline; }
+  .more-row .d { font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.05em; color: var(--muted); text-transform: uppercase; }
+  .more-row .m { font-family: var(--mono); font-size: 8.5px; color: var(--muted); }
+  .more-all { display: flex; justify-content: space-between; padding-top: 8px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  .now h4 { margin: 0 0 10px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-weight: 400; }
+  .now dl { margin: 0; display: grid; grid-template-columns: 74px 1fr; gap: 6px 8px; font-size: 11.5px; }
+  .now dt { font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); padding-top: 2px; }
+  .now dd { margin: 0; color: var(--ink-2); }
+  .diagram { height: 110px; }
+  .caption { font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.05em; color: var(--muted); margin-top: 6px; }
+
+  /* ---------- home: career ---------- */
+  .career { border-top: 1px solid var(--ink); }
+  .career-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; padding: 6px 20px 22px; }
+  .job { display: grid; grid-template-columns: 92px 1fr; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--line-soft); }
+  .job .yrs { font-family: var(--mono); font-size: 9.5px; color: var(--muted); padding-top: 2px; }
+  .job .what b { font-size: 12px; display: block; }
+  .job .what span { font-size: 11px; color: var(--muted); }
+
+  /* ---------- footer ---------- */
+  .sitefoot { border-top: 1px solid var(--ink); background: var(--fill); }
+  .foot-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+  .foot-col { padding: 20px; border-right: 1px solid var(--line); }
+  .foot-col:last-child { border-right: 0; }
+  .foot-col h4 { margin: 0 0 10px; font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 400; }
+  .foot-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; font-size: 11.5px; }
+  .foot-col p { margin: 0; font-size: 10.5px; color: var(--ink-2); line-height: 1.55; }
+  .sub-form { display: flex; gap: 0; margin-top: 8px; }
+  .sub-form .field { flex: 1; border: 1px solid var(--line); border-right: 0; padding: 6px 8px; font-family: var(--mono); font-size: 8.5px; color: var(--muted); background: var(--frame); }
+  .sub-form .go { border: 1px solid var(--ink); background: var(--ink); color: var(--frame); font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.08em; padding: 6px 8px; text-transform: uppercase; }
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding: 12px 20px; border-top: 1px solid var(--line); }
+  .badge { font-family: var(--mono); font-size: 8px; letter-spacing: 0.08em; text-transform: uppercase; border: 1px solid var(--line); padding: 4px 7px; color: var(--ink-2); background: var(--frame); }
+  .badge.hot { border-color: var(--ink); }
+  .foot-base { display: flex; align-items: center; gap: 16px; padding: 10px 20px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.06em; color: var(--muted); text-transform: uppercase; }
+  .foot-base .right { margin-left: auto; display: flex; gap: 16px; }
+  .counter { border: 1px solid var(--ink); padding: 2px 6px; color: var(--ink); letter-spacing: 0.18em; background: var(--frame); }
+
+  /* ---------- articles index ---------- */
+  .page-head { padding: 28px 20px 22px; border-bottom: 1px solid var(--ink); display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: end; }
+  .crumbs { font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .page-head h1 { font-size: 42px; margin: 0 0 6px; letter-spacing: -0.02em; }
+  .page-head .dek { margin: 0; font-size: 13.5px; color: var(--ink-2); max-width: 560px; }
+  .head-stats { text-align: right; font-family: var(--mono); font-size: 9px; letter-spacing: 0.06em; color: var(--muted); text-transform: uppercase; line-height: 1.9; }
+  .archive { display: grid; grid-template-columns: 190px 1fr 210px; }
+  .filters { border-right: 1px solid var(--line); padding: 18px 16px; }
+  .filter-grp { margin-bottom: 20px; }
+  .filter-grp h4 { margin: 0 0 7px; font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-weight: 400; }
+  .filter-grp ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 11.5px; }
+  .filter-grp li { display: flex; justify-content: space-between; gap: 8px; color: var(--ink-2); }
+  .filter-grp li.active { color: var(--ink); font-weight: 600; }
+  .filter-grp li span { font-family: var(--mono); font-size: 9px; color: var(--muted); }
+  .searchbox { border: 1px solid var(--line); padding: 6px 8px; font-family: var(--mono); font-size: 8.5px; color: var(--muted); }
+  .catalog { padding: 14px 0 0; }
+  .catalog th { text-align: left; font-family: var(--mono); font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 400; border-bottom: 1px solid var(--ink); padding: 0 12px 6px; }
+  .catalog td { border-bottom: 1px solid var(--line-soft); padding: 11px 12px; vertical-align: top; font-size: 12px; }
+  .catalog .no { font-family: var(--mono); font-size: 9.5px; color: var(--muted); }
+  .catalog .t { font-weight: 600; }
+  .catalog .t span { display: block; font-weight: 400; font-size: 11px; color: var(--muted); margin-top: 2px; max-width: 330px; }
+  .catalog .meta { font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.04em; color: var(--ink-2); text-transform: uppercase; }
+  .catalog .state { font-family: var(--mono); font-size: 8px; letter-spacing: 0.08em; text-transform: uppercase; border: 1px solid var(--line); padding: 2px 5px; color: var(--muted); white-space: nowrap; }
+  .catalog .state.soon { border-style: dashed; }
+  .pager { display: flex; justify-content: space-between; align-items: center; padding: 16px 12px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .rail { border-left: 1px solid var(--line); padding: 18px 16px; display: grid; gap: 20px; align-content: start; }
+  .rail h4 { margin: 0 0 8px; font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-weight: 400; }
+  .rail p { font-size: 11px; color: var(--ink-2); margin: 0 0 8px; line-height: 1.55; }
+  .rail ol { margin: 0; padding-left: 16px; display: grid; gap: 6px; font-size: 11.5px; }
+  .rail ol li::marker { font-family: var(--mono); font-size: 9px; color: var(--muted); }
+
+  /* ---------- article detail ---------- */
+  .reading { height: 2px; background: var(--fill-2); position: relative; }
+  .reading i { position: absolute; inset: 0 auto 0 0; width: 38%; background: var(--ink); display: block; }
+  .article-head { padding: 26px 20px 22px; border-bottom: 1px solid var(--ink); }
+  .article-head h1 { font-size: 40px; line-height: 1.08; letter-spacing: -0.02em; margin: 8px 0 10px; max-width: 760px; }
+  .article-head .dek { font-size: 15px; color: var(--ink-2); max-width: 620px; margin: 0 0 14px; line-height: 1.5; }
+  .byline { display: flex; gap: 16px; flex-wrap: wrap; font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); border-top: 1px solid var(--line); padding-top: 10px; }
+  .byline b { color: var(--ink); font-weight: 500; }
+  .article-body { display: grid; grid-template-columns: 120px minmax(0, 640px) 220px; gap: 28px; padding: 26px 20px 30px; }
+  .toc { position: sticky; top: 20px; align-self: start; }
+  .toc h4 { margin: 0 0 8px; font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-weight: 400; }
+  .toc ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; font-size: 10.5px; color: var(--ink-2); }
+  .toc ol li { border-left: 2px solid var(--line); padding-left: 8px; }
+  .toc ol li.active { border-left-color: var(--ink); color: var(--ink); }
+  .prose h2 { font-size: 20px; margin: 22px 0 8px; letter-spacing: -0.01em; }
+  .prose h2:first-child { margin-top: 0; }
+  .prose p { margin: 0 0 12px; font-size: 13.5px; line-height: 1.75; color: var(--ink-2); }
+  .prose .drop { float: left; font-size: 44px; line-height: 0.8; padding: 4px 8px 0 0; font-weight: 700; }
+  .pull { border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 12px 0; margin: 20px 0; font-size: 18px; line-height: 1.4; letter-spacing: -0.01em; max-width: 470px; }
+  .codeblock { border: 1px solid var(--line); background: var(--fill); padding: 12px; margin: 16px 0; }
+  .codeblock .tag { border: 0; padding: 0; margin-bottom: 8px; }
+  .code-line { height: 7px; background: var(--fill-2); margin: 5px 0; }
+  .sidenotes { border-left: 1px solid var(--line); padding-left: 16px; display: grid; gap: 16px; align-content: start; }
+  .sidenote { font-size: 10.5px; line-height: 1.55; color: var(--muted); }
+  .sidenote b { font-family: var(--mono); font-size: 9px; color: var(--note); font-weight: 500; display: block; margin-bottom: 3px; }
+  .article-foot { border-top: 1px solid var(--ink); padding: 20px; display: grid; grid-template-columns: 1fr 300px; gap: 24px; }
+  .filed { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .filed span { border: 1px solid var(--line); font-family: var(--mono); font-size: 8px; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 6px; color: var(--ink-2); }
+  .author { border: 1px solid var(--line); padding: 12px; display: grid; grid-template-columns: 52px 1fr; gap: 10px; }
+  .author .av { height: 52px; }
+  .author b { font-size: 12px; display: block; }
+  .author p { margin: 2px 0 0; font-size: 10.5px; color: var(--muted); line-height: 1.5; }
+  .nextprev { display: flex; justify-content: space-between; gap: 12px; margin-top: 18px; border-top: 1px solid var(--line); padding-top: 12px; font-family: var(--mono); font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+
+  /* ---------- mobile wireframe ---------- */
+  .mobile-wrap { display: grid; grid-template-columns: 390px 1fr; gap: 32px; align-items: start; }
+  .phone { border: 1px solid var(--ink); background: var(--frame); box-shadow: 5px 5px 0 var(--fill-2); }
+  .phone .ticker { font-size: 8px; gap: 10px; padding: 5px 10px; }
+  .phone .mast { padding: 10px; gap: 10px; }
+  .phone .monogram { width: 34px; height: 34px; font-size: 10px; }
+  .phone .brand .word { font-size: 12px; letter-spacing: 0.12em; }
+  .phone .brand .sub { font-size: 6.5px; }
+  .phone .nav { font-size: 8px; gap: 8px; }
+  .phone .menu { border: 1px solid var(--ink); padding: 4px 6px; }
+  .phone .hero { grid-template-columns: 1fr; }
+  .phone .hero-main { padding: 18px 12px; border-right: 0; border-bottom: 1px solid var(--line); }
+  .phone .hero h1 { font-size: 27px; }
+  .phone .hero-sub { font-size: 11px; }
+  .phone .idcard { padding: 12px; }
+  .phone .idcard .photo { height: 90px; }
+  .phone .doors { grid-template-columns: 1fr; }
+  .phone .door { border-right: 0; border-bottom: 1px solid var(--line); padding: 12px; }
+  .phone .door h3 { font-size: 16px; }
+  .phone .door p { font-size: 10.5px; }
+  .phone .sec-head { padding: 14px 12px 0; }
+  .phone .sec-head h2 { font-size: 16px; }
+  .phone .ledger th, .phone .ledger td { padding-left: 12px; padding-right: 12px; font-size: 10px; }
+  .phone .ledger th:nth-child(3), .phone .ledger td:nth-child(3),
+  .phone .ledger th:nth-child(4), .phone .ledger td:nth-child(4) { display: none; }
+  .phone .desk { grid-template-columns: 1fr; }
+  .phone .desk-main { border-right: 0; border-bottom: 1px solid var(--line); padding: 14px 12px; }
+  .phone .essay h3 { font-size: 18px; }
+  .phone .desk-side { padding: 14px 12px; }
+  .phone .foot-cols { grid-template-columns: 1fr 1fr; }
+  .phone .foot-col { padding: 12px; border-bottom: 1px solid var(--line); }
+  .phone .foot-base { flex-wrap: wrap; gap: 6px; font-size: 7.5px; padding: 8px 10px; }
+  .mnotes { border: 1px solid var(--line); background: var(--frame); padding: 20px; }
+  .mnotes h3 { margin: 0 0 12px; font-size: 15px; }
+  .mnotes ol { margin: 0; padding-left: 18px; display: grid; gap: 10px; font-size: 12px; color: var(--ink-2); line-height: 1.5; }
+  .mnotes ol b { font-family: var(--mono); font-size: 9px; color: var(--note); letter-spacing: 0.04em; }
+
+  /* ---------- notes ---------- */
+  .notes { margin-top: 16px; border: 1px solid var(--line); background: var(--frame); }
+  .notes h3 { margin: 0; padding: 10px 14px; border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-weight: 400; }
+  .notes ol { margin: 0; padding: 12px 14px 14px 34px; display: grid; gap: 7px; font-size: 12px; color: var(--ink-2); line-height: 1.5; }
+  .notes ol li::marker { font-family: var(--mono); font-size: 10px; color: var(--note); }
+  .notes b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- closing ---------- */
+  .closing { border-top: 2px solid var(--ink); margin-top: 20px; padding-top: 20px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; }
+  .closing h2 { font-size: 22px; margin: 0 0 10px; }
+  .closing p { margin: 0 0 8px; color: var(--ink-2); font-size: 13.5px; max-width: 540px; }
+  .closing ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: 12.5px; color: var(--ink-2); }
+  .closing .open { border-left: 2px solid var(--note); padding-left: 14px; }
+
+  @media (max-width: 900px) {
+    .hero, .desk, .career-grid, .page-head, .article-foot, .mobile-wrap, .closing { grid-template-columns: 1fr; }
+    .doors { grid-template-columns: 1fr; }
+    .door { border-right: 0; border-bottom: 1px solid var(--line); }
+    .archive { grid-template-columns: 1fr; }
+    .filters, .rail { border: 0; border-top: 1px solid var(--line); }
+    .article-body { grid-template-columns: 1fr; }
+    .toc, .sidenotes { border: 0; padding: 0; }
+    .foot-cols { grid-template-columns: 1fr 1fr; }
+    .principles { grid-template-columns: 1fr; }
+    .mobile-wrap { grid-template-columns: 1fr; }
+    .phone { max-width: 390px; }
+    .hero h1 { font-size: 34px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ================= DOC HEAD ================= -->
+  <header class="doc-head">
+    <p class="doc-kicker">Design exploration · v0.1 · 22 Oct 2026</p>
+    <h1>Paper Terminal — a 1999 homepage, modernized</h1>
+    <p class="doc-dek">
+      Wireframes only: structure, hierarchy and behavior. No final colour, type or visual polish.
+      The direction takes the signals of a late-90s personal site — catalogues, counters, badges,
+      sidebars, "last updated" — and runs them on modern rails: real status data, accessible
+      navigation, and writing at the centre. The page should read as a working desk, not a résumé.
+    </p>
+
+    <div class="principles">
+      <div class="principle">
+        <b>Three practices, one desk</b>
+        <span>Write / Design / Architect are the navigation and the offer, not a service list. Each has its own archive.</span>
+      </div>
+      <div class="principle">
+        <b>Dense, not crowded</b>
+        <span>1999 information density with modern spacing and a measured reading column. No decorative emptiness.</span>
+      </div>
+      <div class="principle">
+        <b>Evidence over adjectives</b>
+        <span>Ledgers, dated entries, specs, diagrams and outcomes. Claims are footnotes, not headlines.</span>
+      </div>
+    </div>
+
+    <div class="map">
+      <div class="map-row"><div>1999 signal</div><div>2026 translation</div></div>
+      <div class="map-row"><div>Hit counter</div><div>Live status line + read count, real numbers</div></div>
+      <div class="map-row"><div>"Under construction"</div><div>Now panel: what is actually in progress this month</div></div>
+      <div class="map-row"><div>Guestbook</div><div>Reply by email; no accounts, no comments</div></div>
+      <div class="map-row"><div>88×31 buttons</div><div>Colophon strip: stack, feeds, "no trackers"</div></div>
+      <div class="map-row"><div>Frames / table layout</div><div>CSS grid with visible rules and a fixed ledger rhythm</div></div>
+      <div class="map-row"><div>Marquee</div><div>Status ticker, pausable, respects reduced motion</div></div>
+      <div class="map-row"><div>"Best viewed in Netscape"</div><div>"Best viewed with any browser" + a11y note</div></div>
+    </div>
+  </header>
+
+  <!-- ================= SCREEN 01 — HOME ================= -->
+  <figure class="screen" id="s01" style="margin:0 0 64px;">
+    <div class="screen-cap">
+      <span class="num">SCREEN 01</span>
+      <h2>Home — the desk</h2>
+      <span class="dims">1440 · 12-col · scroll</span>
+    </div>
+
+    <div class="frame">
+      <div class="ticker">
+        <span><span class="dot">●</span> ONLINE</span>
+        <span>LAST DEPLOY 2026-10-22 14:02 UTC</span>
+        <span>SOFIA 23°C / CLEAR</span>
+        <span>AVAILABLE FOR CONSULTING — Q1 2027</span>
+        <span class="spacer">RSS · EMAIL</span>
+      </div>
+
+      <div class="mast">
+        <div class="monogram">KM</div>
+        <div class="brand">
+          <div class="word">SEPTOKOD</div>
+          <div class="sub">Write · Design · Architect</div>
+        </div>
+        <div class="nav">
+          <span class="n">01</span><span>Write</span>
+          <span class="n">02</span><span>Design</span>
+          <span class="n">03</span><span>Architect</span>
+          <span class="n">04</span><span>Work</span>
+          <span class="n">05</span><span>About</span>
+          <span class="search">⌘K Index</span>
+        </div>
+      </div>
+
+      <div class="hero">
+        <div class="hero-main">
+          <span class="tag"><b>01</b> Hero / identity</span>
+          <div class="eyebrow">Senior backend engineer · AI engineering consultant</div>
+          <h1>I <em>write</em>, <em>design</em>, and <em>architect</em> software.</h1>
+          <p class="hero-sub">
+            Twenty years of production systems across fintech, logistics and AI tooling.
+            Independent since 2025. I prototype first, document the decisions, and leave
+            systems a team can maintain.
+          </p>
+          <div class="cta-row">
+            <span class="btn">Read the latest essay →</span>
+            <span class="btn ghost">Curriculum vitae · PDF</span>
+          </div>
+          <p class="hero-meta">Currently · <b>AI feasibility study for a C++ → Rust migration</b></p>
+        </div>
+
+        <div class="idcard">
+          <span class="tag"><b>02</b> ID card</span>
+          <div class="ph photo"><span>Portrait 3:4</span></div>
+          <div class="name">KALOYAN MIRCHEV</div>
+          <div class="role">Backend engineer, writer, systems architect</div>
+          <dl>
+            <dt>Base</dt><dd>Sofia, BG · UTC+3</dd>
+            <dt>Status</dt><dd>Consulting · Q1 2027</dd>
+            <dt>Since</dt><dd>2006 · independent 2025</dd>
+          </dl>
+          <div class="links"><span>Email ↗</span><span>GitHub ↗</span><span>LinkedIn ↗</span></div>
+          <div class="barcode" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <div class="doors">
+        <div class="door">
+          <span class="no">01</span>
+          <h3>Write</h3>
+          <p>Essays on systems, operations, and the unglamorous parts of shipping software.</p>
+          <div class="latest">
+            <b>Latest · Nov 2026 · soon</b>
+            KYC pipelines that survive an audit
+          </div>
+          <div class="foot"><span>14 essays →</span><span>RSS ↗</span></div>
+        </div>
+        <div class="door">
+          <span class="no">02</span>
+          <h3>Design</h3>
+          <p>Interfaces and tools where the constraints are real and the user is busy.</p>
+          <div class="latest">
+            <b>Latest · 2025</b>
+            Case study: a subtitle editor for four platforms
+          </div>
+          <div class="foot"><span>6 studies →</span><span>PDF ↗</span></div>
+        </div>
+        <div class="door">
+          <span class="no">03</span>
+          <h3>Architect</h3>
+          <p>Boundaries, failure modes and migrations that held under load.</p>
+          <div class="latest">
+            <b>Latest · 2023</b>
+            KYC microservice: boundaries &amp; failure modes
+          </div>
+          <div class="foot"><span>9 notes →</span><span>Diagram ↗</span></div>
+        </div>
+      </div>
+
+      <div class="sec-head">
+        <h2>Selected work <span class="label">2014—2026</span></h2>
+        <span class="more">[ All 06 projects → ]</span>
+      </div>
+
+      <table class="ledger">
+        <thead>
+          <tr><th style="width:90px">Year</th><th>Project</th><th style="width:120px">Role</th><th style="width:150px">Stack</th><th style="width:120px">Outcome</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="yr">2025</td><td class="proj">Cross-platform subtitle editor<span>Desktop tool, four operating systems</span></td><td>Design + build</td><td class="stack">Electron · Vue · TS</td><td>Shipped</td></tr>
+          <tr><td class="yr">2024</td><td class="proj">Automated QA test-data tooling<span>Generates and exports fixtures</span></td><td>Architect</td><td class="stack">Python</td><td>−40% setup</td></tr>
+          <tr><td class="yr">2022—23</td><td class="proj">KYC identity verification service<span>Multi-market compliance workflow</span></td><td>Backend lead</td><td class="stack">Ruby · Rails</td><td>3 markets</td></tr>
+          <tr><td class="yr">2020—22</td><td class="proj">Shipper–carrier matching engine<span>Logistics marketplace</span></td><td>Design + build</td><td class="stack">Python</td><td>+30% accuracy</td></tr>
+          <tr><td class="yr">2015—16</td><td class="proj">High-throughput taxi GPS ingestion<span>Streaming and archival pipeline</span></td><td>Architect</td><td class="stack">Go</td><td>Real-time</td></tr>
+        </tbody>
+      </table>
+
+      <div class="desk">
+        <div class="desk-main">
+          <span class="tag"><b>03</b> Writing / current essay</span>
+          <div class="essay">
+            <div class="kicker">Essay 014 · Fintech · 9 min</div>
+            <h3>KYC pipelines that survive an audit</h3>
+            <p class="dek">Most of the difficulty is not in the checks themselves, but in proving, two years later, that they ran.</p>
+            <div class="bars">
+              <span class="bar" style="width:98%"></span>
+              <span class="bar" style="width:95%"></span>
+              <span class="bar" style="width:72%"></span>
+            </div>
+            <p class="read" style="margin:14px 0 0">Read essay →</p>
+          </div>
+          <div class="more-list">
+            <div class="more-row"><span class="d">Aug 2026</span><span>Idempotency is a product decision</span><span class="m">6 min</span></div>
+            <div class="more-row"><span class="d">Jun 2026</span><span>A test suite is a communication device</span><span class="m">5 min</span></div>
+            <div class="more-row"><span class="d">Apr 2026</span><span>Reading the invoice: parsing without a schema</span><span class="m">10 min</span></div>
+            <div class="more-all"><span>[ All 24 essays → ]</span><span>RSS ↗</span></div>
+          </div>
+        </div>
+        <div class="desk-side">
+          <span class="tag"><b>04</b> Now / proof of work</span>
+          <div class="now">
+            <h4>This month</h4>
+            <dl>
+              <dt>Building</dt><dd>Legacy migration feasibility harness</dd>
+              <dt>Writing</dt><dd>Go or Python for backend services?</dd>
+              <dt>Reading</dt><dd>Designing Data-Intensive Applications</dd>
+              <dt>Open to</dt><dd>Architecture reviews · Q1 2027</dd>
+            </dl>
+          </div>
+          <div class="ph diagram"><span>System map · inline SVG</span></div>
+          <p class="caption">Fig. 1 — request path, 4 services, 2 queues. Links to the architecture note.</p>
+        </div>
+      </div>
+
+      <section class="career">
+        <div class="sec-head">
+          <h2>Career, abridged</h2>
+          <span class="more">[ Full CV · PDF → ]</span>
+        </div>
+        <div class="career-grid">
+          <div class="job"><div class="yrs">2025—now</div><div class="what"><b>Independent consultant</b><span>AI engineering · remote</span></div></div>
+          <div class="job"><div class="yrs">2016—19</div><div class="what"><b>Senior Python Developer</b><span>Openters · Berlin / remote</span></div></div>
+          <div class="job"><div class="yrs">2023—25</div><div class="what"><b>Senior Ruby Developer</b><span>Emerchantpay · remote</span></div></div>
+          <div class="job"><div class="yrs">2014—16</div><div class="what"><b>Python / Platform</b><span>vHeselra · Sofia</span></div></div>
+          <div class="job"><div class="yrs">2019—23</div><div class="what"><b>Senior Python Developer</b><span>Ship.Cars · USA / remote</span></div></div>
+          <div class="job"><div class="yrs">1999—14</div><div class="what"><b>Twelve earlier roles</b><span>PHP, Perl, Delphi · Sofia</span></div></div>
+        </div>
+      </section>
+
+      <footer class="sitefoot">
+        <div class="foot-cols">
+          <div class="foot-col">
+            <h4>Sitemap</h4>
+            <ul>
+              <li>01 Write</li>
+              <li>02 Design</li>
+              <li>03 Architect</li>
+              <li>04 Work</li>
+              <li>05 About / Now</li>
+              <li>Index ⌘K</li>
+            </ul>
+          </div>
+          <div class="foot-col">
+            <h4>Elsewhere</h4>
+            <ul>
+              <li>GitHub ↗</li>
+              <li>LinkedIn ↗</li>
+              <li>Email ↗</li>
+              <li>RSS feed ↗</li>
+              <li>CV · PDF ↗</li>
+            </ul>
+          </div>
+          <div class="foot-col">
+            <h4>Colophon</h4>
+            <p>Set in Source Serif 4 and JetBrains Mono. Built with Hugo, deployed to GitHub Pages. Hand-written HTML, no trackers, no cookie banner.</p>
+          </div>
+          <div class="foot-col">
+            <h4>Signal</h4>
+            <p>One letter a month: what I built, what broke, what I read.</p>
+            <div class="sub-form">
+              <span class="field">EMAIL ADDRESS</span>
+              <span class="go">Join</span>
+            </div>
+            <p style="margin-top:8px;font-size:9px;color:var(--muted)">Double opt-in. Unsubscribe in one click.</p>
+          </div>
+        </div>
+        <div class="badges">
+          <span class="badge hot">[ HUGO ]</span>
+          <span class="badge">[ NO COOKIES ]</span>
+          <span class="badge">[ RSS 2.0 ]</span>
+          <span class="badge">[ ANY BROWSER ]</span>
+          <span class="badge">[ WCAG AA ]</span>
+          <span class="badge">[ HAND-CODED ]</span>
+        </div>
+        <div class="foot-base">
+          <span>© 2026 Kaloyan Mirchev</span>
+          <span>Last updated by hand · 22 Oct 2026</span>
+          <span class="right"><span>Reads <span class="counter">012483</span></span><span>Best viewed with any browser</span></span>
+        </div>
+      </footer>
+    </div>
+
+    <div class="notes">
+      <h3>Callouts — home</h3>
+      <ol>
+        <li><b>Status strip:</b> the 1999 ticker, made useful — deploy time, local weather, availability. Pauses on hover/focus and respects reduced motion. On mobile it collapses to a single status + "more".</li>
+        <li><b>ID card:</b> replaces the generic avatar and blurb with a compact, scannable record: base, availability, start year, links. The barcode is decorative and hidden from assistive tech.</li>
+        <li><b>Hero promise:</b> the three verbs are the positioning and the IA. Headline stays genuine text (no image), so it is selectable, translatable and indexable.</li>
+        <li><b>Three doors:</b> each is a real destination with its own archive, latest item and count. This is where writing, design and architecture become evidence rather than claims.</li>
+        <li><b>Work ledger:</b> table, not cards — architecture thinking reads as a ledger with year, role, stack and outcome. Collapses to stacked rows on mobile, keeping title + year + outcome.</li>
+        <li><b>The desk split:</b> writing on the left, current work and a system map on the right. The two halves are the "writer + builder" proof, side by side.</li>
+        <li><b>Career:</b> two-column ledger, four decades compressed. The "twelve earlier roles" row is deliberate — depth without a wall of bullets.</li>
+        <li><b>Footer:</b> the 1999 artefacts — badges, counter, colophon, sitemap — but each is true or useful. Counter is a static build number at first, real analytics later (privacy-friendly).</li>
+      </ol>
+    </div>
+  </figure>
+
+  <!-- ================= SCREEN 02 — ARTICLES INDEX ================= -->
+  <figure class="screen" id="s02" style="margin:0 0 64px;">
+    <div class="screen-cap">
+      <span class="num">SCREEN 02</span>
+      <h2>Writing — the catalogue</h2>
+      <span class="dims">1440 · 3-col archive</span>
+    </div>
+
+    <div class="frame">
+      <div class="ticker">
+        <span><span class="dot">●</span> ONLINE</span>
+        <span>ARCHIVE 2024—2026</span>
+        <span>24 ESSAYS · 3 IN PROGRESS</span>
+        <span class="spacer">RSS · EMAIL</span>
+      </div>
+
+      <div class="mast">
+        <div class="monogram">KM</div>
+        <div class="brand">
+          <div class="word">SEPTOKOD</div>
+          <div class="sub">Write · Design · Architect</div>
+        </div>
+        <div class="nav">
+          <span class="n">01</span><span class="active">Write</span>
+          <span class="n">02</span><span>Design</span>
+          <span class="n">03</span><span>Architect</span>
+          <span class="n">04</span><span>Work</span>
+          <span class="n">05</span><span>About</span>
+          <span class="search">⌘K Index</span>
+        </div>
+      </div>
+
+      <div class="page-head">
+        <div>
+          <div class="crumbs">Home / Write</div>
+          <h1>Writing</h1>
+          <p class="dek">Essays on backend systems, AI tooling, and the operational side of shipping software. Long enough to be useful, short enough to finish.</p>
+        </div>
+        <div class="head-stats">
+          24 essays · 2024—2026<br>
+          Avg. 8 min · No paywall<br>
+          <span style="border-bottom:1px solid var(--ink);color:var(--ink)">RSS ↗</span>
+        </div>
+      </div>
+
+      <div class="archive">
+        <aside class="filters">
+          <div class="filter-grp">
+            <h4>Search</h4>
+            <div class="searchbox">TITLE, TOPIC, KEYWORD</div>
+          </div>
+          <div class="filter-grp">
+            <h4>Topics</h4>
+            <ul>
+              <li class="active">All <span>24</span></li>
+              <li>Architecture <span>9</span></li>
+              <li>Fintech <span>6</span></li>
+              <li>AI engineering <span>5</span></li>
+              <li>Tooling <span>4</span></li>
+              <li>Career <span>3</span></li>
+            </ul>
+          </div>
+          <div class="filter-grp">
+            <h4>Year</h4>
+            <ul>
+              <li>2026 <span>7</span></li>
+              <li>2025 <span>11</span></li>
+              <li>2024 <span>6</span></li>
+            </ul>
+          </div>
+          <div class="filter-grp">
+            <h4>Series</h4>
+            <ul>
+              <li>Migrations that held <span>4</span></li>
+              <li>Audit-ready systems <span>3</span></li>
+            </ul>
+          </div>
+        </aside>
+
+        <main class="catalog">
+          <table>
+            <thead>
+              <tr><th style="width:40px">No.</th><th style="width:78px">Date</th><th>Title</th><th style="width:90px">Topic</th><th style="width:56px">Min</th><th style="width:70px">State</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="no">024</td><td class="meta">Nov 2026</td><td class="t">Prototype-first AI tooling for legacy systems<span>What to prototype, what to skip, and how to hand a working system to the team that maintains it.</span></td><td class="meta">AI eng.</td><td class="meta">11</td><td><span class="state soon">Soon</span></td></tr>
+              <tr><td class="no">023</td><td class="meta">Dec 2026</td><td class="t">KYC pipelines that survive an audit<span>Data retention, idempotency, and the edge cases auditors actually ask about.</span></td><td class="meta">Fintech</td><td class="meta">9</td><td><span class="state soon">Soon</span></td></tr>
+              <tr><td class="no">022</td><td class="meta">2027</td><td class="t">Go or Python for backend services?<span>Throughput, team ergonomics, and where each one quietly costs you.</span></td><td class="meta">Arch.</td><td class="meta">12</td><td><span class="state soon">Draft</span></td></tr>
+              <tr><td class="no">021</td><td class="meta">Sep 2026</td><td class="t">The migration is the documentation<span>Why a legacy rewrite is the best chance to recover how a system actually works.</span></td><td class="meta">Arch.</td><td class="meta">7</td><td><span class="state">Live</span></td></tr>
+              <tr><td class="no">020</td><td class="meta">Aug 2026</td><td class="t">Idempotency is a product decision<span>Retries, duplicates and the user-visible cost of getting them wrong.</span></td><td class="meta">Fintech</td><td class="meta">6</td><td><span class="state">Live</span></td></tr>
+              <tr><td class="no">019</td><td class="meta">Jun 2026</td><td class="t">A test suite is a communication device<span>What your tests say to the next engineer, whether you meant it or not.</span></td><td class="meta">Tooling</td><td class="meta">5</td><td><span class="state">Live</span></td></tr>
+              <tr><td class="no">018</td><td class="meta">Apr 2026</td><td class="t">Reading the invoice: parsing without a schema<span>Matching logic for a logistics marketplace with messy real-world input.</span></td><td class="meta">Arch.</td><td class="meta">10</td><td><span class="state">Live</span></td></tr>
+            </tbody>
+          </table>
+          <div class="pager">
+            <span>← Newer</span>
+            <span>Page 1 / 4</span>
+            <span>Older →</span>
+          </div>
+        </main>
+
+        <aside class="rail">
+          <div>
+            <h4>Letter</h4>
+            <p>One essay a month. No tracking pixels, no growth hacks.</p>
+            <div class="sub-form">
+              <span class="field">EMAIL</span>
+              <span class="go">Join</span>
+            </div>
+          </div>
+          <div>
+            <h4>Most read</h4>
+            <ol>
+              <li>The migration is the documentation</li>
+              <li>Idempotency is a product decision</li>
+              <li>Prototype first, promise second</li>
+            </ol>
+          </div>
+          <div>
+            <h4>On the desk</h4>
+            <p style="font-size:10.5px">Designing Data-Intensive Applications — M. Kleppmann</p>
+            <p style="font-size:10.5px;color:var(--muted)">[ Full reading list → ]</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <div class="notes">
+      <h3>Callouts — writing archive</h3>
+      <ol>
+        <li><b>It is a catalogue, not a blog.</b> Numbered entries, dates and topics read like an index — the 1999 "links page" instinct, applied to your own work.</li>
+        <li><b>Upcoming entries are visible.</b> Three "Soon / Draft" rows solve the empty archive problem honestly and give the page forward motion. They link to a short abstract, not a 404.</li>
+        <li><b>Left rail filters are plain text</b> with counts; no dropdowns. On mobile they become a horizontal chip row above the list.</li>
+        <li><b>Right rail:</b> newsletter, most-read, reading list. Restrained density; collapses below the list on mobile.</li>
+        <li><b>Table degrades deliberately:</b> on narrow screens it becomes rows of No. / date / title / state; topic and read time move under the title.</li>
+        <li><b>Search is a real input</b> (or a link to a static index page if JS is avoided). Keyboard shortcut lives in the masthead.</li>
+      </ol>
+    </div>
+  </figure>
+
+  <!-- ================= SCREEN 03 — ARTICLE ================= -->
+  <figure class="screen" id="s03" style="margin:0 0 64px;">
+    <div class="screen-cap">
+      <span class="num">SCREEN 03</span>
+      <h2>Article — reading room</h2>
+      <span class="dims">1440 · 68ch measure</span>
+    </div>
+
+    <div class="frame">
+      <div class="reading" aria-hidden="true"><i></i></div>
+      <div class="mast">
+        <div class="monogram">KM</div>
+        <div class="brand">
+          <div class="word">SEPTOKOD</div>
+          <div class="sub">Write · Design · Architect</div>
+        </div>
+        <div class="nav">
+          <span class="n">01</span><span class="active">Write</span>
+          <span class="n">02</span><span>Design</span>
+          <span class="n">03</span><span>Architect</span>
+          <span class="n">04</span><span>Work</span>
+          <span class="n">05</span><span>About</span>
+          <span class="search">⌘K Index</span>
+        </div>
+      </div>
+
+      <div class="article-head">
+        <div class="crumbs">Home / Write / Essay 014</div>
+        <span class="tag"><b>05</b> Title block · series + status</span>
+        <h1>KYC pipelines that survive an audit</h1>
+        <p class="dek">Most of the difficulty is not in the checks themselves, but in proving, two years later, that they ran.</p>
+        <div class="byline">
+          <span><b>Kaloyan Mirchev</b></span>
+          <span>Dec 2026</span>
+          <span>9 min read</span>
+          <span>Series · Audit-ready systems</span>
+          <span>Reply by email ↗</span>
+          <span>Copy link</span>
+        </div>
+      </div>
+
+      <div class="article-body">
+        <aside class="toc">
+          <h4>In this essay</h4>
+          <ol>
+            <li class="active">The expensive part</li>
+            <li>What auditors ask</li>
+            <li>Idempotency as evidence</li>
+            <li>A trail you can read</li>
+            <li>Checklist</li>
+          </ol>
+        </aside>
+
+        <article class="prose">
+          <span class="tag"><b>06</b> Body · 68ch · serif</span>
+          <p><span class="drop">M</span>ost of the difficulty is not in the checks themselves, but in proving, two years later, that they ran. A pipeline that cannot explain a past decision is a liability: not because the decision was wrong, but because nobody can reconstruct why it was right at the time.</p>
+          <p>The goal is not a perfect audit trail. It is one a tired engineer can follow at 2am, six months after the person who built it left.</p>
+
+          <h2>What auditors actually ask</h2>
+          <p>They do not ask for architecture diagrams. They ask who approved a change, which version of a rule ran on a given day, and whether the same request could have been processed twice.</p>
+
+          <blockquote class="pull">Idempotency is the cheapest form of documentation you will ever write.</blockquote>
+
+          <div class="codeblock">
+            <span class="tag">Code / 12 lines</span>
+            <div class="code-line" style="width:64%"></div>
+            <div class="code-line" style="width:82%"></div>
+            <div class="code-line" style="width:71%"></div>
+            <div class="code-line" style="width:48%"></div>
+          </div>
+
+          <h2>A trail you can read</h2>
+          <p>Store the decision, the inputs and the rule version together. One row, one story. If a check needs three joins and a conversation to explain, it will not survive an audit — or an incident review.</p>
+          <div class="bars">
+            <span class="bar" style="width:97%"></span>
+            <span class="bar" style="width:92%"></span>
+            <span class="bar" style="width:64%"></span>
+          </div>
+        </article>
+
+        <aside class="sidenotes">
+          <span class="tag"><b>07</b> Margin notes</span>
+          <div class="sidenote"><b>01</b> Retention windows differ per market; the strictest one wins. See the compliance matrix.</div>
+          <div class="sidenote"><b>02</b> A hash of the rule version is enough; storing the full rule text is not.</div>
+          <div class="sidenote"><b>03</b> Related: <u>Idempotency is a product decision</u> · Essay 020.</div>
+        </aside>
+      </div>
+
+      <div class="article-foot">
+        <div>
+          <span class="tag"><b>08</b> End matter</span>
+          <p style="margin:0;font-size:12px;color:var(--ink-2)">If this was useful, reply by email — I read everything. Corrections are credited.</p>
+          <div class="filed"><span>Filed under</span><span>Fintech</span><span>Compliance</span><span>Architecture</span></div>
+          <div class="nextprev">
+            <span>← Previous · The migration is the documentation</span>
+            <span>Next · Go or Python →</span>
+          </div>
+        </div>
+        <div class="author">
+          <div class="ph av"><span>KM</span></div>
+          <div>
+            <b>Kaloyan Mirchev</b>
+            <p>Backend engineer and consultant. Writes about systems that have to keep working after the launch post.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="notes">
+      <h3>Callouts — article</h3>
+      <ol>
+        <li><b>Reading progress</b> is a 2px ink line, no colour, no glow. Purely positional.</li>
+        <li><b>Metadata is a single line</b> under the title: author, date, reading time, series, reply link. No share bar, no author avatar above the fold.</li>
+        <li><b>The measure is capped at 68 characters.</b> This is the one place the 1999 density is dropped — reading wins.</li>
+        <li><b>Margin notes</b> carry the old marginalia habit and keep the body clean. On mobile they become footnotes after the paragraph.</li>
+        <li><b>Code and diagrams</b> sit on the paper fill with a visible tag, not a dark theme block. They are part of the page, not an embed.</li>
+        <li><b>End matter</b> offers email instead of comments; previous/next keeps the catalogue navigable; the author card is compact.</li>
+      </ol>
+    </div>
+  </figure>
+
+  <!-- ================= SCREEN 04 — MOBILE ================= -->
+  <figure class="screen" id="s04" style="margin:0 0 40px;">
+    <div class="screen-cap">
+      <span class="num">SCREEN 04</span>
+      <h2>Mobile — 390px home</h2>
+      <span class="dims">390 × 844 · single column</span>
+    </div>
+
+    <div class="mobile-wrap">
+      <div class="phone">
+        <div class="ticker"><span><span class="dot">●</span> ONLINE</span><span class="spacer">MORE</span></div>
+        <div class="mast">
+          <div class="monogram">KM</div>
+          <div class="brand"><div class="word">SEPTOKOD</div><div class="sub">Write · Design · Architect</div></div>
+          <div class="nav"><span class="menu">INDEX</span></div>
+        </div>
+        <div class="hero">
+          <div class="hero-main">
+            <span class="tag"><b>01</b> Hero</span>
+            <div class="eyebrow">Senior backend engineer · consultant</div>
+            <h1>I write, design, and architect software.</h1>
+            <p class="hero-sub">Twenty years of production systems. Independent since 2025.</p>
+            <div class="cta-row"><span class="btn">Latest essay →</span><span class="btn ghost">CV · PDF</span></div>
+          </div>
+          <div class="idcard">
+            <div class="ph photo"><span>Portrait 3:4</span></div>
+            <div class="name">KALOYAN MIRCHEV</div>
+            <div class="role">Backend engineer · Sofia, BG</div>
+          </div>
+        </div>
+        <div class="doors">
+          <div class="door"><span class="no">01</span><h3>Write</h3><p>Essays on systems and shipping.</p><div class="foot"><span>14 essays →</span><span>RSS</span></div></div>
+          <div class="door"><span class="no">02</span><h3>Design</h3><p>Interfaces under real constraints.</p><div class="foot"><span>6 studies →</span><span>PDF</span></div></div>
+          <div class="door"><span class="no">03</span><h3>Architect</h3><p>Boundaries and migrations.</p><div class="foot"><span>9 notes →</span><span>Diagram</span></div></div>
+        </div>
+        <div class="sec-head"><h2>Selected work</h2><span class="more">[ ALL ]</span></div>
+        <table class="ledger">
+          <thead><tr><th>Year</th><th>Project</th><th>Role</th><th>Stack</th></tr></thead>
+          <tbody>
+            <tr><td class="yr">2025</td><td class="proj">Subtitle editor<span>Electron · Vue</span></td><td>Design</td><td>—</td></tr>
+            <tr><td class="yr">2024</td><td class="proj">QA test-data tooling<span>Python</span></td><td>Architect</td><td>—</td></tr>
+            <tr><td class="yr">2022</td><td class="proj">KYC verification service<span>Ruby · Rails</span></td><td>Lead</td><td>—</td></tr>
+          </tbody>
+        </table>
+        <div class="desk">
+          <div class="desk-main">
+            <span class="tag"><b>02</b> Writing</span>
+            <div class="essay">
+              <div class="kicker">Essay 014 · 9 min</div>
+              <h3>KYC pipelines that survive an audit</h3>
+              <p class="read">Read essay →</p>
+            </div>
+          </div>
+        </div>
+        <div class="foot-cols">
+          <div class="foot-col"><h4>Sitemap</h4><ul><li>Write</li><li>Design</li><li>Architect</li></ul></div>
+          <div class="foot-col"><h4>Elsewhere</h4><ul><li>GitHub</li><li>Email</li><li>RSS</li></ul></div>
+        </div>
+        <div class="foot-base"><span>© 2026</span><span class="counter">012483</span><span>ANY BROWSER</span></div>
+      </div>
+
+      <div class="mnotes">
+        <h3>Mobile behavior</h3>
+        <ol>
+          <li><b>INDEX opens a full-screen numbered sitemap</b> — the 1999 "contents" page instead of a generic hamburger drawer. Focus trapped, Escape closes, links announced in order.</li>
+          <li><b>Ticker collapses</b> to one truthful status (online / availability). No infinite marquee; nothing moves without a pause control.</li>
+          <li><b>Hero stacks:</b> claim → proof → ID card. Primary action above the fold, second action beside it, both ≥44px tall.</li>
+          <li><b>Doors become rows,</b> not cards: number, verb, one line, latest item. Tap targets span the full row.</li>
+          <li><b>Ledger drops role and stack,</b> keeps year, project and one detail line. No horizontal scrolling.</li>
+          <li><b>Footer</b> keeps only sitemap, contact and the counter. Newsletter moves above it, after the writing block.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="notes">
+      <h3>Callouts — mobile</h3>
+      <ol>
+        <li><b>Content order changes:</b> the ID card moves below the claim so the headline is the first thing read, while availability stays visible in the ticker.</li>
+        <li><b>All tap targets are 44px minimum</b>; nav and footer links get 8px vertical padding beyond the visual text.</li>
+        <li><b>No hidden content:</b> the INDEX menu contains the same six destinations as desktop, plus search and RSS.</li>
+      </ol>
+    </div>
+  </figure>
+
+  <!-- ================= CLOSING ================= -->
+  <section class="closing">
+    <div>
+      <h2>What this direction asks of the build</h2>
+      <p>Only three new page types are required: <b>Writing index</b>, <b>Article</b>, and <b>Work/Architect archive</b>. Everything else fits the existing content model.</p>
+      <ul>
+        <li>Keep the current serif reading setup; add mono only for metadata, never for body.</li>
+        <li>Reuse <code>data/articles.yaml</code> as the catalogue source; add <code>status</code>, <code>topic</code>, <code>read time</code>, <code>series</code> fields.</li>
+        <li>One 2px rule weight, one ink colour, one accent used only for annotations — no gradients, no shadows except the wireframe's own offset.</li>
+        <li>Badges and counter are static content in v1; wire them to real data later.</li>
+        <li>Semantics first: real heading order, tables for ledgers, <code>aria-current</code> on nav, visible focus rings, reduced-motion for the ticker.</li>
+      </ul>
+    </div>
+    <div class="open">
+      <h2>Open questions</h2>
+      <ul>
+        <li><b>Brand:</b> keep "SEPTOKOD" or use your name as the wordmark?</li>
+        <li><b>Three practices:</b> do Write / Design / Architect match how you want to be hired, or should it be Write / Build / Advise?</li>
+        <li><b>Newsletter:</b> real mailing list, or an email link only?</li>
+        <li><b>Density:</b> is the ledger on home too much for a first visit, or exactly the point?</li>
+        <li><b>Counter:</b> keep the 1999 hit counter as a deliberate joke, or drop it?</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item ticker-live"><span class="ticker-dot" aria-hidden="true"></span>Online</span>
+    <span class="ticker-item ticker-build">Last build {{ now.UTC.Format "2006-01-02 15:04 UTC" }}</span>
+    <span class="ticker-item ticker-place">{{ .Site.Params.location }}</span>
+    <span class="ticker-item ticker-avail">{{ .Site.Params.availability }}</span>
+    <span class="ticker-links">
+      <a href="{{ "index.xml" | relURL }}">RSS</a>
+      <a href="mailto:{{ .Site.Params.email }}">Email</a>
+    </span>
+  </div>
+</div>

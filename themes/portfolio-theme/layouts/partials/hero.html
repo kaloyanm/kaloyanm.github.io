@@ -1,6 +1,37 @@
-<section id="top" class="hero">
-  <p class="hero-eyebrow">Hi, I'm</p>
-  <h1 class="hero-name">{{ .Title }}</h1>
-  <p class="hero-role">{{ .Params.role }}</p>
-  <a class="hero-email" href="mailto:{{ .Site.Params.email }}">{{ .Site.Params.email }}</a>
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-main">
+    <p class="kicker"><span class="kicker-no">01</span> Practice</p>
+    <p class="hero-eyebrow">{{ .Site.Params.role }}</p>
+    <h1 id="hero-title" class="hero-title">I <em>think</em>, <em>design</em>, and <em>architect</em> software.</h1>
+    <p class="hero-sub">{{ .Site.Params.summary }}</p>
+    <div class="hero-cta">
+      <a class="btn" href="{{ relURL "think/" }}">Read the essays <span aria-hidden="true">→</span></a>
+      <a class="btn btn-ghost" href="{{ relURL "about/" }}">Full profile</a>
+    </div>
+    <p class="hero-meta">Currently · <strong>{{ .Site.Params.now_building }}</strong></p>
+  </div>
+
+  <aside class="idcard" aria-label="Profile">
+    <div class="idcard-plate">
+      <span class="plate-meta">KM / 001</span>
+      <span class="plate-initials" aria-hidden="true">KM</span>
+      <span class="plate-foot">Sofia · 42.69°N 23.32°E</span>
+    </div>
+
+    <div class="idcard-body">
+      <p class="idcard-name">{{ .Site.Params.name }}</p>
+      <p class="idcard-role">Backend engineer, writer, systems architect</p>
+      <dl class="idcard-facts">
+        <dt>Base</dt><dd>{{ .Site.Params.location }}</dd>
+        <dt>Status</dt><dd>{{ .Site.Params.availability }}</dd>
+        <dt>Since</dt><dd>{{ .Site.Params.since }}</dd>
+      </dl>
+      <div class="idcard-links">
+        <a href="mailto:{{ .Site.Params.email }}">Email ↗</a>
+        <a href="{{ relURL "about/" }}">Profile ↗</a>
+        <a href="{{ "index.xml" | relURL }}">RSS ↗</a>
+      </div>
+      <div class="barcode" aria-hidden="true"></div>
+    </div>
+  </aside>
 </section>

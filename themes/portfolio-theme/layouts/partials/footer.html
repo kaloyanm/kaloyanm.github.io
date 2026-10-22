@@ -1,3 +1,52 @@
+{{ $home := .Site.Home.RelPermalink }}
 <footer class="site-footer">
-  <p>&copy; {{ now.Year }} {{ .Site.Params.name | default .Site.Title }}. Built with Hugo.</p>
+  <div class="footer-inner">
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h2 class="footer-title">Sitemap</h2>
+        <ul>
+          <li><a href="{{ relURL "think/" }}">01 Think</a></li>
+          <li><a href="{{ printf "%swork/#design" $home }}">02 Design</a></li>
+          <li><a href="{{ printf "%swork/#architect" $home }}">03 Architect</a></li>
+          <li><a href="{{ relURL "work/" }}">04 Work</a></li>
+          <li><a href="{{ relURL "about/" }}">05 About</a></li>
+          <li><a href="#top">Back to top ↑</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h2 class="footer-title">Elsewhere</h2>
+        <ul>
+          <li><a href="mailto:{{ .Site.Params.email }}">Email ↗</a></li>
+          <li><a href="{{ "index.xml" | relURL }}">RSS feed ↗</a></li>
+          <li><a href="{{ relURL "about/#contact" }}">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h2 class="footer-title">Colophon</h2>
+        <p>Set in Source Serif 4 and JetBrains Mono. Built with Hugo, deployed to GitHub Pages. Hand-written HTML, no trackers, no cookie banner.</p>
+      </div>
+
+      <div class="footer-col">
+        <h2 class="footer-title">Signal</h2>
+        <p>No newsletter. New essays reach the RSS feed; replies come to email and are read.</p>
+        <p class="footer-links"><a href="{{ "index.xml" | relURL }}">RSS</a> · <a href="mailto:{{ .Site.Params.email }}">Email</a></p>
+      </div>
+    </div>
+
+    <div class="badges" aria-label="Site notes">
+      <span class="badge">[ HUGO ]</span>
+      <span class="badge">[ NO TRACKERS ]</span>
+      <span class="badge">[ RSS 2.0 ]</span>
+      <span class="badge">[ ANY BROWSER ]</span>
+      <span class="badge">[ HAND-CODED ]</span>
+    </div>
+
+    <div class="footer-base">
+      <span>© {{ now.Year }} {{ .Site.Params.name }}</span>
+      <span>{{ .Site.Params.location }}</span>
+      <span class="footer-base-right">Vol. 01 · {{ .Site.Params.availability }} · Best viewed with any browser</span>
+    </div>
+  </div>
 </footer>

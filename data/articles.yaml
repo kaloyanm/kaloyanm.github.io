@@ -1,28 +1,36 @@
-# Articles that are planned or in progress.
-# Each entry supports: title, summary, date (planned), status, url, tags.
-# Leave `url` out while an article is unpublished — the card renders as "Coming soon".
-# Once it is live, add `url` (e.g. "/articles/my-post/") and change `status`.
+# Essays in progress and published pieces not yet in content/.
+# When an essay is published, add `url` (e.g. "/think/my-essay/") and change `status`.
+# `no` is the catalogue number; keep them in publication order.
 
-- title: "Prototype-first AI tooling for legacy systems"
+- no: "001"
+  title: "Prototype-first AI tooling for legacy systems"
   summary: "How I scope feasibility studies: what to prototype, what to skip, and how to hand a working system to the team that has to maintain it."
   date: "November 2026"
   status: "Coming soon"
+  topic: "AI engineering"
+  read: "11 min"
   tags:
     - AI engineering
     - Legacy migration
 
-- title: "KYC pipelines that survive an audit"
+- no: "002"
+  title: "KYC pipelines that survive an audit"
   summary: "Practical notes from a decade of payment and compliance work — data retention, idempotency, and the edge cases auditors actually ask about."
   date: "December 2026"
   status: "Coming soon"
+  topic: "Fintech"
+  read: "9 min"
   tags:
     - Fintech
     - Compliance
 
-- title: "Go or Python for backend services?"
+- no: "003"
+  title: "Go or Python for backend services?"
   summary: "A pragmatic comparison from running both in production: throughput, team ergonomics, and where each one quietly costs you."
   date: "Early 2027"
   status: "Drafting"
+  topic: "Architecture"
+  read: "12 min"
   tags:
     - Go
     - Python

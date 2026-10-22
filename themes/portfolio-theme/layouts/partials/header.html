@@ -1,17 +1,32 @@
 {{ $home := .Site.Home.RelPermalink }}
-<header class="site-header">
-  <nav class="nav">
-    <a class="nav-name" href="{{ $home }}">{{ .Site.Params.name | default .Site.Title }}</a>
-    <ul class="nav-links">
-      <li><a href="{{ $home }}#about">About</a></li>
-      <li><a href="{{ $home }}#experience">Experience</a></li>
-      <li><a href="{{ $home }}#projects">Projects</a></li>
-      <li><a href="{{ "/articles/" | relURL }}"{{ if eq .Section "articles" }} aria-current="page"{{ end }}>Articles</a></li>
-      <li><a href="{{ $home }}#skills">Skills</a></li>
-      <li><a href="{{ $home }}#contact">Contact</a></li>
-    </ul>
-    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode">
-      <span class="theme-toggle-icon" aria-hidden="true"></span>
-    </button>
-  </nav>
+{{ $items := slice
+  (dict "n" "01" "label" "Think" "url" (relURL "think/") "active" (eq .Section "think"))
+  (dict "n" "02" "label" "Design" "url" (printf "%swork/#design" $home) "active" false)
+  (dict "n" "03" "label" "Architect" "url" (printf "%swork/#architect" $home) "active" false)
+  (dict "n" "04" "label" "Work" "url" (relURL "work/") "active" (eq .Type "work"))
+  (dict "n" "05" "label" "About" "url" (relURL "about/") "active" (eq .Type "about"))
+}}
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="monogram" href="{{ $home }}" aria-label="Kaloyan Mirchev — home">KM</a>
+    <div class="brand">
+      <a class="wordmark" href="{{ $home }}">{{ .Site.Params.name }}</a>
+      <span class="brand-sub">Think · Design · Architect</span>
+    </div>
+
+    <nav class="nav" aria-label="Sections">
+      {{ range $items }}
+      <a href="{{ .url }}"{{ if .active }} aria-current="page"{{ end }}><span class="nav-n">{{ .n }}</span>{{ .label }}</a>
+      {{ end }}
+    </nav>
+
+    <div class="mast-actions">
+      <button class="index-btn" type="button" data-index-open aria-haspopup="dialog">
+        <span>Index</span><kbd>⌘K</kbd>
+      </button>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to dark theme">
+        <span class="theme-toggle-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
 </header>

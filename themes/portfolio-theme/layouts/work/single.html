@@ -1,0 +1,70 @@
+{{ define "main" }}
+{{ $projects := hugo.Data.projects }}
+{{ $design := where $projects "track" "design" }}
+{{ $architect := where $projects "track" "architect" }}
+
+<div class="page page-work">
+  <header class="page-head">
+    <div class="page-head-main">
+      <p class="crumbs"><a href="{{ .Site.Home.RelPermalink }}">Home</a> / Work</p>
+      <h1 class="page-title">{{ .Title }}</h1>
+      <div class="page-dek">{{ .Content }}</div>
+    </div>
+    <p class="page-stats">
+      {{ len $projects }} projects<br>
+      2014—2026<br>
+      <a href="{{ relURL "about/" }}">Profile ↗</a>
+    </p>
+  </header>
+
+  <section class="work-group" id="design" aria-labelledby="design-title">
+    <div class="group-head">
+      <div>
+        <p class="kicker"><span class="kicker-no">01</span> Practice</p>
+        <h2 id="design-title" class="group-title">Design</h2>
+      </div>
+      <p class="group-desc">Interfaces and tools where the constraints are real: a four-platform desktop editor and a QA workflow that removed a manual bottleneck.</p>
+      <span class="group-count">{{ len $design }} projects</span>
+    </div>
+
+    <div class="project-grid">
+      {{ range $design }}
+      <article class="project" id="{{ .slug }}">
+        <p class="project-meta"><span>{{ .period }}</span><span>{{ .role }}</span><span class="project-outcome">{{ .outcome }}</span></p>
+        <h3 class="project-title">{{ .title }}</h3>
+        <p class="project-desc">{{ .description }}</p>
+        <ul class="tag-list">
+          {{ range .tags }}<li>{{ . }}</li>{{ end }}
+        </ul>
+      </article>
+      {{ end }}
+    </div>
+  </section>
+
+  <section class="work-group" id="architect" aria-labelledby="architect-title">
+    <div class="group-head">
+      <div>
+        <p class="kicker"><span class="kicker-no">02</span> Practice</p>
+        <h2 id="architect-title" class="group-title">Architect</h2>
+      </div>
+      <p class="group-desc">Boundaries, migrations and the pipelines behind the product: payments, identity, logistics and location at scale.</p>
+      <span class="group-count">{{ len $architect }} projects</span>
+    </div>
+
+    <div class="project-grid">
+      {{ range $architect }}
+      <article class="project" id="{{ .slug }}">
+        <p class="project-meta"><span>{{ .period }}</span><span>{{ .role }}</span><span class="project-outcome">{{ .outcome }}</span></p>
+        <h3 class="project-title">{{ .title }}</h3>
+        <p class="project-desc">{{ .description }}</p>
+        <ul class="tag-list">
+          {{ range .tags }}<li>{{ . }}</li>{{ end }}
+        </ul>
+      </article>
+      {{ end }}
+    </div>
+  </section>
+
+  <p class="page-back"><a href="{{ .Site.Home.RelPermalink }}">← Back to the desk</a></p>
+</div>
+{{ end }}

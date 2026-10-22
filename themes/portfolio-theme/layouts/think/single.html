@@ -1,0 +1,54 @@
+{{ define "main" }}
+{{ $toc := .TableOfContents }}
+<div class="article">
+  <div class="progress" aria-hidden="true"><span data-progress></span></div>
+
+  <header class="article-head">
+    <p class="crumbs"><a href="{{ .Site.Home.RelPermalink }}">Home</a> / <a href="{{ relURL "think/" }}">Think</a> / Essay</p>
+    {{ with .Params.series }}<p class="article-series">{{ . }}</p>{{ end }}
+    <h1 class="article-title">{{ .Title }}</h1>
+    {{ with .Description }}<p class="article-dek">{{ . }}</p>{{ end }}
+    <div class="byline">
+      <span>By {{ .Site.Params.name }}</span>
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time>
+      <span>{{ .ReadingTime }} min read</span>
+      <a href="mailto:{{ .Site.Params.email }}?subject={{ urlquery (printf "Re: %s" .Title) }}">Reply by email ↗</a>
+      <button class="copy-link" type="button" data-copy-link>Copy link</button>
+    </div>
+  </header>
+
+  <div class="article-body{{ if not $toc }} no-toc{{ end }}">
+    {{ if $toc }}
+    <aside class="article-toc">
+      <h2 class="toc-title">In this essay</h2>
+      {{ .TableOfContents }}
+    </aside>
+    {{ end }}
+
+    <article class="prose">
+      {{ .Content }}
+    </article>
+  </div>
+
+  <footer class="article-foot">
+    <div class="article-foot-main">
+      <ul class="tag-list" aria-label="Filed under">
+        {{ range .Params.tags }}<li>{{ . }}</li>{{ end }}
+      </ul>
+
+      <nav class="article-nav" aria-label="More essays">
+        {{ with .PrevInSection }}<a href="{{ .RelPermalink }}">← {{ .Title }}</a>{{ end }}
+        {{ with .NextInSection }}<a href="{{ .RelPermalink }}">{{ .Title }} →</a>{{ end }}
+      </nav>
+    </div>
+
+    <aside class="author">
+      <span class="author-mark" aria-hidden="true">KM</span>
+      <div>
+        <p class="author-name">{{ .Site.Params.name }}</p>
+        <p class="author-bio">Backend engineer and consultant. Writes about systems that have to keep working after the launch post.</p>
+      </div>
+    </aside>
+  </footer>
+</div>
+{{ end }}

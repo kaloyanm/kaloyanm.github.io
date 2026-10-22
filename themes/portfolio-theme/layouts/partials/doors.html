@@ -1,0 +1,41 @@
+{{ $articles := hugo.Data.articles }}
+{{ $design := where hugo.Data.projects "track" "design" }}
+{{ $architect := where hugo.Data.projects "track" "architect" }}
+{{ $essay := index $articles 0 }}
+{{ $designLatest := index $design 0 }}
+{{ $architectLatest := index $architect 0 }}
+
+<section class="doors" aria-label="Three practices">
+  <article class="door">
+    <p class="door-no">01</p>
+    <h2 class="door-title"><a href="{{ relURL "think/" }}">Think</a></h2>
+    <p class="door-desc">Essays, notes and decision records — thinking in public about systems, tooling and the craft of shipping software.</p>
+    <div class="door-latest">
+      <span class="door-label">Latest · {{ $essay.date }}</span>
+      <span class="door-latest-title">{{ $essay.title }}</span>
+    </div>
+    <p class="door-foot"><span>{{ len $articles }} in progress</span><a href="{{ relURL "think/" }}">Archive →</a></p>
+  </article>
+
+  <article class="door">
+    <p class="door-no">02</p>
+    <h2 class="door-title"><a href="{{ relURL "work/" }}#design">Design</a></h2>
+    <p class="door-desc">Interfaces and tools where the constraints are real and the user is busy.</p>
+    <div class="door-latest">
+      <span class="door-label">Latest · {{ $designLatest.period }}</span>
+      <span class="door-latest-title">{{ $designLatest.title }}</span>
+    </div>
+    <p class="door-foot"><span>{{ len $design }} case studies</span><a href="{{ relURL "work/" }}#design">Work →</a></p>
+  </article>
+
+  <article class="door">
+    <p class="door-no">03</p>
+    <h2 class="door-title"><a href="{{ relURL "work/" }}#architect">Architect</a></h2>
+    <p class="door-desc">Boundaries, failure modes and migrations that held under load.</p>
+    <div class="door-latest">
+      <span class="door-label">Latest · {{ $architectLatest.period }}</span>
+      <span class="door-latest-title">{{ $architectLatest.title }}</span>
+    </div>
+    <p class="door-foot"><span>{{ len $architect }} systems</span><a href="{{ relURL "work/" }}#architect">Work →</a></p>
+  </article>
+</section>

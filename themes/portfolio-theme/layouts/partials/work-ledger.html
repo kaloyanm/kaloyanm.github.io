@@ -1,0 +1,34 @@
+{{ $projects := hugo.Data.projects }}
+<section class="section" aria-labelledby="work-title">
+  <div class="section-head">
+    <h2 id="work-title" class="section-title">Selected work <span class="section-meta">2014—2026</span></h2>
+    <a class="more" href="{{ relURL "work/" }}">[ All {{ len $projects }} projects → ]</a>
+  </div>
+
+  <table class="ledger">
+    <caption class="sr-only">Selected projects</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="col-year">Year</th>
+        <th scope="col">Project</th>
+        <th scope="col" class="col-role">Role</th>
+        <th scope="col" class="col-stack">Stack</th>
+        <th scope="col" class="col-outcome">Outcome</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{ range $projects }}
+      <tr>
+        <td class="cell-year">{{ .year }}</td>
+        <td class="cell-project">
+          <a href="{{ printf "%s#%s" (relURL "work/") .slug }}">{{ .title }}</a>
+          <span>{{ .short | default .description }}</span>
+        </td>
+        <td class="cell-role">{{ .role }}</td>
+        <td class="cell-stack">{{ delimit .tags " · " }}</td>
+        <td class="cell-outcome">{{ .outcome }}</td>
+      </tr>
+      {{ end }}
+    </tbody>
+  </table>
+</section>

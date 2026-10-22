@@ -1,0 +1,104 @@
+{{ define "main" }}
+{{ $articles := hugo.Data.articles }}
+{{ $published := where .Site.RegularPages "Section" "think" }}
+{{ $topics := slice }}
+{{ range $articles }}{{ range .tags }}{{ $topics = $topics | append . }}{{ end }}{{ end }}
+{{ $topics = $topics | uniq | sort }}
+
+<div class="page page-think">
+  <header class="page-head">
+    <div class="page-head-main">
+      <p class="crumbs"><a href="{{ .Site.Home.RelPermalink }}">Home</a> / Think</p>
+      <h1 class="page-title">{{ .Title }}</h1>
+      <div class="page-dek">{{ .Content }}</div>
+    </div>
+    <p class="page-stats">
+      {{ len $articles }} in progress<br>
+      {{ with index $articles 0 }}First · {{ .date }}<br>{{ end }}
+      <a href="{{ "index.xml" | relURL }}">RSS ↗</a>
+    </p>
+  </header>
+
+  <div class="archive">
+    <div class="archive-main">
+      <div class="section-head">
+        <h2 class="section-title">In progress</h2>
+        <span class="section-meta">Publication order</span>
+      </div>
+
+      <table class="catalogue">
+        <caption class="sr-only">Essays in progress</caption>
+        <thead>
+          <tr>
+            <th scope="col" class="col-no">No.</th>
+            <th scope="col" class="col-date">Planned</th>
+            <th scope="col">Title</th>
+            <th scope="col" class="col-topic">Topic</th>
+            <th scope="col" class="col-min">Min</th>
+            <th scope="col" class="col-state">State</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{ range $articles }}
+          <tr>
+            <td class="cat-no">{{ .no }}</td>
+            <td class="cat-date">{{ .date }}</td>
+            <td class="cat-title">
+              {{ if .url }}<a href="{{ .url | relURL }}">{{ .title }}</a>{{ else }}{{ .title }}{{ end }}
+              <span>{{ .summary }}</span>
+            </td>
+            <td class="cat-topic">{{ .topic }}</td>
+            <td class="cat-min">{{ .read | replaceRE " *min$" "" }}</td>
+            <td><span class="state">{{ .status }}</span></td>
+          </tr>
+          {{ end }}
+        </tbody>
+      </table>
+
+      <div class="published">
+        <div class="section-head">
+          <h2 class="section-title">Published</h2>
+          <span class="section-meta">{{ len $published }} essays</span>
+        </div>
+        {{ if $published }}
+        <ul class="published-list">
+          {{ range $published }}
+          <li>
+            <span class="more-date">{{ .Date.Format "Jan 2006" }}</span>
+            <a class="more-title" href="{{ .RelPermalink }}">{{ .Title }}</a>
+            <span class="more-state">{{ .ReadingTime }} min</span>
+          </li>
+          {{ end }}
+        </ul>
+        {{ else }}
+        <div class="empty">
+          <p class="empty-kicker">[ No published essays yet ]</p>
+          <p>The first essay is scheduled for {{ with index $articles 0 }}{{ .date }}{{ end }}. The <a href="{{ "index.xml" | relURL }}">RSS feed</a> will carry it the day it goes up.</p>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+
+    <aside class="archive-rail">
+      <div class="rail-block">
+        <h2 class="rail-title">Follow</h2>
+        <p>New essays go to the RSS feed. Replies come to email and are read.</p>
+        <p class="rail-links"><a href="{{ "index.xml" | relURL }}">RSS ↗</a></p>
+        <p class="rail-links"><a href="mailto:{{ .Site.Params.email }}">Email ↗</a></p>
+      </div>
+
+      <div class="rail-block">
+        <h2 class="rail-title">Topics</h2>
+        <ul class="rail-list">
+          {{ range $topics }}<li>{{ . }}</li>{{ end }}
+        </ul>
+      </div>
+
+      <div class="rail-block">
+        <h2 class="rail-title">About this section</h2>
+        <p>Essays are written once, edited twice, and published when they are useful. No paywall, no tracking pixels, no comments.</p>
+      </div>
+    </aside>
+  </div>
+</div>
+{{ end }}

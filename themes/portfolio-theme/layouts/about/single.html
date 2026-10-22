@@ -1,0 +1,94 @@
+{{ define "main" }}
+{{ $exp := hugo.Data.experience }}
+{{ $skills := hugo.Data.skills }}
+
+<div class="page page-about">
+  <header class="page-head">
+    <div class="page-head-main">
+      <p class="crumbs"><a href="{{ .Site.Home.RelPermalink }}">Home</a> / About</p>
+      <h1 class="page-title">{{ .Title }}</h1>
+      <p class="page-dek">{{ .Site.Params.role }}</p>
+    </div>
+    <p class="page-stats">
+      {{ .Site.Params.location }}<br>
+      {{ .Site.Params.availability }}<br>
+      Independent since 2025
+    </p>
+  </header>
+
+  <div class="about-intro">
+    <div class="prose about-prose">
+      {{ .Content }}
+    </div>
+    <aside class="about-facts" aria-label="At a glance">
+      <h2 class="rail-title">At a glance</h2>
+      <dl>
+        <dt>Base</dt><dd>{{ .Site.Params.location }}</dd>
+        <dt>Status</dt><dd>{{ .Site.Params.availability }}</dd>
+        <dt>Since</dt><dd>{{ .Site.Params.since }}</dd>
+        <dt>Stack</dt><dd>Python · Ruby · Go · PHP</dd>
+        <dt>Focus</dt><dd>Fintech, logistics, AI tooling</dd>
+      </dl>
+      <a class="btn" href="mailto:{{ .Site.Params.email }}">Email me</a>
+    </aside>
+  </div>
+
+  <section class="section" id="career" aria-labelledby="career-heading">
+    <div class="section-head">
+      <h2 id="career-heading" class="section-title">Career</h2>
+      <span class="section-meta">2005—2026</span>
+    </div>
+
+    <div class="career-detail">
+      {{ range $exp.featured }}
+      <article class="role">
+        <p class="role-period">{{ .period }}</p>
+        <div>
+          <h3 class="role-title">{{ .role }}</h3>
+          <p class="role-company">{{ .company }} · {{ .location }}</p>
+          <ul class="role-highlights">
+            {{ range .highlights }}<li>{{ . }}</li>{{ end }}
+          </ul>
+        </div>
+      </article>
+      {{ end }}
+    </div>
+
+    <div class="earlier">
+      <h3 class="earlier-title">Earlier roles</h3>
+      <ul class="earlier-list">
+        {{ range $exp.earlier }}
+        <li>
+          <span class="earlier-period">{{ .period }}</span>
+          <span class="earlier-detail"><strong>{{ .company }}</strong> · {{ .role }} — {{ .summary }}</span>
+        </li>
+        {{ end }}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="skills" aria-labelledby="skills-heading">
+    <div class="section-head">
+      <h2 id="skills-heading" class="section-title">Skills</h2>
+      <span class="section-meta">Daily tools</span>
+    </div>
+    <div class="skill-groups">
+      {{ range $skills }}
+      <div class="skill-group">
+        <h3 class="skill-group-title">{{ .category }}</h3>
+        <ul class="chips">
+          {{ range .items }}<li>{{ . }}</li>{{ end }}
+        </ul>
+      </div>
+      {{ end }}
+    </div>
+  </section>
+
+  <section class="section contact" id="contact" aria-labelledby="contact-heading">
+    <p class="kicker"><span class="kicker-no">05</span> Contact</p>
+    <h2 id="contact-heading" class="contact-title">Available for consulting</h2>
+    <p class="contact-text">Migration feasibility, architecture reviews, and backend systems that have to keep working. Remote, from Sofia.</p>
+    <a class="contact-email" href="mailto:{{ .Site.Params.email }}">{{ .Site.Params.email }}</a>
+  </section>
+</div>
+{{ end }}

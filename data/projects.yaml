@@ -1,29 +1,68 @@
+# Selected work, in reverse chronological order.
+# track: "design" or "architect" — used to group the Work page and the home doors.
+
 - title: "Cross-Platform Subtitle Editor"
+  slug: "subtitle-editor"
+  year: "2025"
   period: "2025 · Freelance"
+  track: "design"
+  role: "Design + build"
+  outcome: "Shipped"
+  short: "Subtitle editing across Windows, macOS and Linux"
   description: "Desktop application for editing subtitles, built with Electron-Vite to deliver consistent, seamless performance across Windows, macOS, and Linux."
   tags: ["Electron", "Vite", "TypeScript", "Desktop"]
 
 - title: "Automated QA Test-Data Tooling"
+  slug: "qa-test-data-tooling"
+  year: "2025"
   period: "2025 · Freelance"
+  track: "design"
+  role: "Design + build"
+  outcome: "−40% setup time"
+  short: "Test-data generation without the manual bottleneck"
   description: "Web-based tools for generating and exporting test data, streamlining QA workflows and removing a manual bottleneck from the testing process."
   tags: ["Python", "Tooling", "QA"]
 
 - title: "KYC Identity-Verification Microservice"
+  slug: "kyc-verification"
+  year: "2023–25"
   period: "2023–2025 · Emerchantpay"
+  track: "architect"
+  role: "Backend lead"
+  outcome: "3 markets"
+  short: "Identity verification across three markets"
   description: "Extended an existing KYC microservice to support identity verification, improving onboarding reliability and regulatory compliance across multiple markets."
   tags: ["Ruby", "Microservices", "Compliance"]
 
 - title: "Shipper-Carrier Matching Engine"
+  slug: "shipper-carrier-matching"
+  year: "2020–22"
   period: "2020–2022 · Ship.Cars"
+  track: "architect"
+  role: "Design + build"
+  outcome: "+30% accuracy"
+  short: "Shippers and carriers, matched with better pricing accuracy"
   description: "Matching logic connecting shippers and carriers on a logistics marketplace, alongside an invoicing-domain refactor that improved pricing accuracy."
   tags: ["Python", "Marketplace", "Logistics"]
 
 - title: "High-Throughput Taxi GPS Ingestion Service"
+  slug: "gps-ingestion"
+  year: "2015–16"
   period: "2015–2016 · TaxiMe"
+  track: "architect"
+  role: "Architect"
+  outcome: "Real-time"
+  short: "Continuous location ingestion for live dispatch"
   description: "Service for ingesting and archiving continuous GPS location updates at scale, feeding a real-time dispatch and driver-availability dashboard."
   tags: ["Go", "Python", "Real-time"]
 
 - title: "Python 2→3 & VPS→Heroku Platform Migration"
+  slug: "python-platform-migration"
+  year: "2016–20"
   period: "2016–2020 · Djansters"
+  track: "architect"
+  role: "Lead"
+  outcome: "40–50% faster"
+  short: "Runtime and hosting migration, 40–50% faster"
   description: "Led the full runtime migration of a production jobs portal from Python 2 to Python 3 and from a VPS to Heroku, alongside query and memory optimizations that cut response times by 40–50%."
   tags: ["Python", "Heroku", "Migration"]

@@ -1,0 +1,26 @@
+{{ $home := .Site.Home.RelPermalink }}
+<dialog id="index-dialog" class="index-dialog" aria-labelledby="index-title">
+  <div class="index-inner">
+    <div class="index-head">
+      <span id="index-title" class="index-title">Index</span>
+      <button class="index-close" type="button" data-index-close aria-label="Close index">Close <span aria-hidden="true">✕</span></button>
+    </div>
+
+    <nav aria-label="Site index">
+      <ol class="index-list">
+        <li><a href="{{ $home }}"><span>00</span>Home</a></li>
+        <li><a href="{{ relURL "think/" }}"><span>01</span>Think <em>Essays and notes</em></a></li>
+        <li><a href="{{ printf "%swork/#design" $home }}"><span>02</span>Design <em>Interfaces and tools</em></a></li>
+        <li><a href="{{ printf "%swork/#architect" $home }}"><span>03</span>Architect <em>Systems and migrations</em></a></li>
+        <li><a href="{{ relURL "work/" }}"><span>04</span>Work <em>All projects</em></a></li>
+        <li><a href="{{ relURL "about/" }}"><span>05</span>About <em>Profile, career, contact</em></a></li>
+      </ol>
+    </nav>
+
+    <div class="index-foot">
+      <a href="mailto:{{ .Site.Params.email }}">{{ .Site.Params.email }}</a>
+      <a href="{{ "index.xml" | relURL }}">RSS</a>
+      <span>{{ .Site.Params.location }}</span>
+    </div>
+  </div>
+</dialog>
