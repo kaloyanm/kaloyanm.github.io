@@ -1,6 +1,8 @@
 {{- $articles := slice -}}
-{{- with hugo.Data.articles -}}
-  {{- if reflect.IsSlice . -}}{{- $articles = . -}}{{- end -}}
+{{- if not hugo.IsProduction -}}
+  {{- with hugo.Data.articles -}}
+    {{- if reflect.IsSlice . -}}{{- $articles = . -}}{{- end -}}
+  {{- end -}}
 {{- end -}}
 
 {{- $published := sort (where .Site.RegularPages "Section" "think") "Date" "desc" -}}
