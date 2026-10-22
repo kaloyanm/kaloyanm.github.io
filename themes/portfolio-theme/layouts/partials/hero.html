@@ -12,11 +12,16 @@
   </div>
 
   <aside class="idcard" aria-label="Profile">
-    <div class="idcard-plate">
-      <span class="plate-meta">KM / 001</span>
-      <span class="plate-initials" aria-hidden="true">KM</span>
-      <span class="plate-foot">Sofia · 42.69°N 23.32°E</span>
-    </div>
+    <figure class="idcard-plate">
+      {{ with resources.Get "images/portrait.jpg" }}
+      {{ $portrait := .Resize "900x q82" }}
+      <img src="{{ $portrait.RelPermalink }}" alt="Portrait of Kaloyan Mirchev" width="{{ $portrait.Width }}" height="{{ $portrait.Height }}" loading="eager" decoding="async">
+      {{ end }}
+      <figcaption class="plate-strip">
+        <span>KM / 001</span>
+        <span>Plovdiv · 42.14°N 24.75°E</span>
+      </figcaption>
+    </figure>
 
     <div class="idcard-body">
       <p class="idcard-name">{{ .Site.Params.name }}</p>
